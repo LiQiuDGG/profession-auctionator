@@ -379,7 +379,7 @@ class WowProfessionScraper:
         # Herb patterns
         herb_keywords = ['leaf', 'bloom', 'blossom', 'weed', 'root', 'kelp', 'grass', 
                         'rose', 'lily', 'cap', 'moss', 'thorn', 'glory', 'vine',
-                        'dreamfoil', 'ragveil']  # Add specific herb names that were miscategorized
+                        'dreamfoil', 'ragveil', 'azshara', 'veil', 'jasmine', 'whiptail']  # Add specific herb names that were miscategorized
         if any(keyword in name_lower for keyword in herb_keywords):
             return 'Reagents/Herb'
             

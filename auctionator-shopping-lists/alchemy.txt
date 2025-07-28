@@ -4,7 +4,7 @@ Outland Alchemy^"Felweed";Reagents/Herb;0;0;0;0;0;0;0;0;;#;1;40^"Dreamfoil";Reag
 
 Northrend Alchemy^"Talandra's Rose";Reagents/Herb;0;0;0;0;0;0;0;0;;#;2;24^"Tiger Lily";Reagents/Herb;0;0;0;0;0;0;0;0;;#;2;26^"Adder's Tongue";Reagents/Other;0;0;0;0;0;0;0;0;;#;2;24^"Icethorn";Reagents/Herb;0;0;0;0;0;0;0;0;;#;2;20^"Lichbloom";Reagents/Herb;0;0;0;0;0;0;0;0;;#;2;165^"Dark Jade, 5xHuge Citrine, 5xEternal Fire)OR";Reagents/Gem;0;0;0;0;0;0;0;0;;#;2;5^"Frost Lotus";Reagents/Elemental;0;0;0;0;0;0;0;0;;#;2;15
 
-Cataclysm Alchemy^"Cinderbloom";Reagents/Herb;0;0;0;0;0;0;0;0;;#;3;85^"Azshara's Veil";Reagents/Other;0;0;0;0;0;0;0;0;;#;3;15^"Heartblossom";Reagents/Herb;0;0;0;0;0;0;0;0;;#;3;25^"Volatile Life";Reagents/Elemental;0;0;0;0;0;0;0;0;;#;3;45^"Twilight Jasmine";Reagents/Other;0;0;0;0;0;0;0;0;;#;3;27^"Whiptail";Reagents/Other;0;0;0;0;0;0;0;0;;#;3;60^"Alicite";Reagents/Other;0;0;0;0;0;0;0;0;;#;3;15^"Zephyrite";Reagents/Other;0;0;0;0;0;0;0;0;;#;3;15
+Cataclysm Alchemy^"Cinderbloom";Reagents/Herb;0;0;0;0;0;0;0;0;;#;3;85^"Azshara's Veil";Reagents/Herb;0;0;0;0;0;0;0;0;;#;3;15^"Heartblossom";Reagents/Herb;0;0;0;0;0;0;0;0;;#;3;25^"Volatile Life";Reagents/Elemental;0;0;0;0;0;0;0;0;;#;3;45^"Twilight Jasmine";Reagents/Herb;0;0;0;0;0;0;0;0;;#;3;27^"Whiptail";Reagents/Herb;0;0;0;0;0;0;0;0;;#;3;60^"Alicite";Reagents/Other;0;0;0;0;0;0;0;0;;#;3;15^"Zephyrite";Reagents/Other;0;0;0;0;0;0;0;0;;#;3;15
 
 Pandaria Alchemy
 
