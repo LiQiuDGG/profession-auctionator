@@ -112,6 +112,29 @@ Mithril Bar (320), Dense Stone (20), Thorium Bar (420), Rugged Leather (72)
 - ✅ **Pattern Priority**: Rearranged choice pattern to be checked first, then skip basic pattern for that line
 - ✅ **Correct Quantities**: Now shows accurate 72 for Rugged Leather as per guide specification
 
+#### Final Fix - Complete Material Extraction:
+- ✅ **Debug Logging Added**: Added detailed logging to identify parsing issues
+- ✅ **Fixed Material Validation**: Removed "copper" and "silver" from skip_words since they appear in valid material names (Copper Bar, Silver Bar)
+- ✅ **Enhanced Regex Pattern**: Updated from `(\d+)x\s*` to `(\d+)\s*x\s*` to handle both "35x" and "35 x" formats (for Green Dye)
+- ✅ **Complete Material Set**: Now finds all 15 expected materials from "Approximate Materials Required" section:
+  - Rough Stone (133), Copper Bar (210), Coarse Stone (80), Silver Bar (7), Bronze Bar (180)
+  - Heavy Stone (105), Green Dye (35), Iron Bar (230), Steel Bar (50), Solid Stone (20) 
+  - Mageweave Cloth (150), Mithril Bar (320), Dense Stone (20), Thorium Bar (420), Rugged Leather (72)
+- ✅ **Additional Materials**: Also captures materials from recipe sections (19 total)
+- ✅ **Proper Categorization**: All materials correctly categorized (Metal, Gem, Cloth, Leather, Other)
+- ✅ **Clean Output**: Removed debug logging for production use
+
+#### Summary Section Only Validation:
+- ✅ **Confirmed Issue**: User correctly identified that the scraper was parsing detailed recipe sections in addition to summary
+- ✅ **Enhanced Stop Indicators**: Added comprehensive section detection to limit parsing to "Approximate Materials Required" section only
+- ✅ **Malformed Entry Filtering**: Added regex patterns to filter out malformed text like "-300", "OR" endings, and bracket entries
+- ✅ **Final Results Validated**:
+  - **Vanilla**: Exactly 15 materials (perfect match to expected list)
+  - **Outland**: Clean 3 materials (Fel Iron Bar 102, Netherweave Cloth 100, Adamantite Bar 180)
+  - **No recipe inflation**: Materials only from summary sections, not detailed step-by-step recipes
+- ✅ **Production File**: Created clean blacksmithing.txt with only vanilla and outland expansions
+- ✅ **Blacksmithing Complete**: First profession successfully parsing summary-only materials ✅
+
 ### Git Configuration
 - **Fixed .gitignore**: Shopping lists are now properly tracked as main deliverables
 - **Complete alchemy.txt**: All available expansions included in tracked file
