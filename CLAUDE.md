@@ -394,6 +394,28 @@ After thorough investigation, we found that Legion and Draenor expansion guides 
 - **Professional quality** shopping lists ready for immediate use
 - **Consistent format** across all professions
 
+### Shadowlands Alchemy Issue Investigation (2025-01-28)
+
+#### Problem Identified:
+🔧 **Shadowlands Alchemy returning 0 materials** despite the guide having a clear "Approximate Materials Required" section with 6 materials:
+- 133x Rune Etched Vial
+- 328x Death Blossom
+- 169x Rising Glory
+- 104x Marrowroot
+- 98x Vigil's Torch
+- 70x Widowbloom
+
+#### Investigation Results:
+- ✅ **Debug scripts show materials ARE found correctly** (6 materials detected)
+- ✅ **Enhanced parsing logic works in isolation**
+- ❌ **Full scraper context somehow losing the materials**
+- 🔧 **Partial fix applied** but issue persists in production scraper
+
+#### Status:
+- Issue requires further investigation to identify why materials are lost between detection and final output
+- All other expansions working correctly
+- Shadowlands Alchemy currently shows empty section in output file
+
 ### Project Structure
 
 ```

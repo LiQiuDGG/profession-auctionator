@@ -152,8 +152,9 @@ class WowProfessionScraper:
         # First, look for the standard "Approximate Materials Required" section
         materials_section = self._find_materials_section(soup)
         if materials_section:
-            materials.extend(self._parse_materials_section(materials_section))
-            if materials:  # If we found materials in the standard section, return them
+            section_materials = self._parse_materials_section(materials_section)
+            materials.extend(section_materials)
+            if section_materials:  # If we found materials in the standard section, return them
                 return materials
         
         # Look for TradeSkillMaster shopping list as fallback
