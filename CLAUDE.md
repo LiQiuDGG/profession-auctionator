@@ -236,23 +236,22 @@ Mithril Bar (320), Dense Stone (20), Thorium Bar (420), Rugged Leather (72)
 ### Comprehensive Profession Configuration (Latest Session)
 
 #### Complete URL Coverage:
-- ✅ **All 12 Core WoW Professions Mapped**: Expanded config to include all primary, gathering, and secondary professions
+- ✅ **All 9 Crafting WoW Professions Mapped**: Expanded config to include all material-based crafting professions
 - ✅ **TWW URL Pattern Discovery**: Found that TWW uses `/guides/wow-{profession}-leveling-guide` pattern
 - ✅ **URL Verification**: Tested URLs for all professions across all expansions to confirm availability
-- ✅ **Focused Scope**: Removed fishing to focus on the 12 core material-based professions
+- ✅ **Focused Scope**: Removed gathering professions to focus on crafting professions that require materials
 
 #### Professions Added:
-- **Primary Production**: Tailoring, Enchanting, Inscription, Jewelcrafting (8 total)
-- **Gathering**: Herbalism, Mining, Skinning (3 total)
-- **Secondary**: Cooking (1 total)
+- **Primary Crafting**: Tailoring, Enchanting, Inscription, Jewelcrafting (8 total)
+- **Secondary Crafting**: Cooking (1 total)
 
 #### Config File Status:
-- ✅ **Complete Coverage**: 12 professions × 11 expansions = 132 guide combinations
-- ✅ **Perfect TWW Integration**: All 12 professions have complete TWW guide coverage
+- ✅ **Complete Coverage**: 9 professions × 11 expansions = 99 guide combinations
+- ✅ **Perfect TWW Integration**: All 9 professions have complete TWW guide coverage
 - ✅ **Production Ready**: Config file ready for all profession scrapers
 
 #### Results:
-- **Fully Supported**: All 12 core professions (Alchemy, Blacksmithing, Engineering, Leatherworking, Tailoring, Enchanting, Inscription, Jewelcrafting, Herbalism, Mining, Skinning, Cooking)
+- **Fully Supported**: All 9 crafting professions (Alchemy, Blacksmithing, Engineering, Leatherworking, Tailoring, Enchanting, Inscription, Jewelcrafting, Cooking)
 - **Ready for Implementation**: All profession scrapers can now use the complete config for full expansion coverage
 
 ### Jewelcrafting TWW Guide Discovery (Final Update)
@@ -275,6 +274,20 @@ Mithril Bar (320), Dense Stone (20), Thorium Bar (420), Rugged Leather (72)
 - ✅ **Complete TWW Integration**: Every profession has TWW guides available
 - ✅ **132 Total URLs**: 12 professions × 11 expansions = complete coverage matrix
 - ✅ **Production Ready**: Streamlined configuration supports all material-based profession scrapers
+
+### Gathering Profession Removal and Final Focus (Current Session)
+
+#### Logical Decision Made:
+- ✅ **Removed Gathering Professions**: Herbalism, Mining, and Skinning removed from configuration
+- ✅ **Reasoning**: Gathering professions are leveled by collecting materials in the world, not by purchasing materials to craft items
+- ✅ **Perfect Alignment**: Now focuses exclusively on professions that require shopping lists for leveling
+- ✅ **Updated Configuration**: Removed all gathering profession URLs from profession_guides_config.json
+
+#### Final Optimized Status:
+- ✅ **Perfect 9-Profession Coverage**: All crafting WoW professions now have complete URL configurations
+- ✅ **Complete TWW Integration**: Every crafting profession has TWW guides available
+- ✅ **99 Total URLs**: 9 professions × 11 expansions = optimal coverage matrix
+- ✅ **Production Ready**: Laser-focused configuration supports only professions that benefit from Auctionator shopping lists
 
 ### Project Structure
 
@@ -317,7 +330,7 @@ Key format requirements:
 
 ## Target Professions
 
-### Primary Professions (Production)
+### Primary Crafting Professions (8)
 - Alchemy ✅ (Complete - all expansions)
 - Blacksmithing 🔄 (In Progress - working on Vanilla)
 - Engineering ✅ (Ready - config updated with all expansion URLs)
@@ -327,13 +340,10 @@ Key format requirements:
 - Inscription ✅ (Ready - config updated with all expansion URLs)
 - Jewelcrafting ✅ (Ready - config updated with all expansion URLs)
 
-### Gathering Professions
-- Herbalism ✅ (Ready - config updated with all expansion URLs)
-- Mining ✅ (Ready - config updated with all expansion URLs)
-- Skinning ✅ (Ready - config updated with all expansion URLs)
-
-### Secondary Professions  
+### Secondary Crafting Professions (1)
 - Cooking ✅ (Ready - config updated with all expansion URLs)
+
+**Note**: Gathering professions (Herbalism, Mining, Skinning) are excluded as they are leveled by gathering materials in the world, not by purchasing materials to craft items.
 
 ## Data Sources
 
