@@ -61,13 +61,12 @@ class BlacksmithingScraper(WowProfessionScraper):
             if not line or len(line) < 5:
                 continue
                 
-            # Look for pattern: "133x Rough Stone" or "210x Copper Bar"
-            match = re.search(r'(\d+)x\s*([A-Za-z\s\']+(?:Bar|Stone|Ore|Cloth|Leather|Dye|Ruby|Coal))', line)
-            if match:
-                quantity = int(match.group(1))
-                name = match.group(2).strip()
-                
-                # Clean up the name
+            # Handle choice materials first (like "72x Rugged Leather or 9x Star Ruby")
+            choice_match = re.search(r'(\d+)x\s*([A-Za-z\s\']+)\s+or\s+(\d+)x\s*([A-Za-z\s\']+)', line)
+            if choice_match:
+                # Take the first option (usually more common/cheaper)
+                quantity = int(choice_match.group(1))
+                name = choice_match.group(2).strip()
                 name = self._clean_item_name(name)
                 
                 if self._is_valid_blacksmithing_material(name):
@@ -76,13 +75,15 @@ class BlacksmithingScraper(WowProfessionScraper):
                         'category': self._categorize_item(name),
                         'quantity': quantity
                     })
-            
-            # Handle choice materials like "72x Rugged Leather or 9x Star Ruby"
-            choice_match = re.search(r'(\d+)x\s*([A-Za-z\s\']+)\s+or\s+(\d+)x\s*([A-Za-z\s\']+)', line)
-            if choice_match:
-                # Take the first option (usually more common/cheaper)
-                quantity = int(choice_match.group(1))
-                name = choice_match.group(2).strip()
+                continue  # Skip the basic pattern check for this line
+                
+            # Look for basic pattern: "133x Rough Stone" or "210x Copper Bar"
+            match = re.search(r'(\d+)x\s*([A-Za-z\s\']+(?:Bar|Stone|Ore|Cloth|Leather|Dye|Ruby|Coal))', line)
+            if match:
+                quantity = int(match.group(1))
+                name = match.group(2).strip()
+                
+                # Clean up the name
                 name = self._clean_item_name(name)
                 
                 if self._is_valid_blacksmithing_material(name):

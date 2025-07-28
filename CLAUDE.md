@@ -104,8 +104,13 @@ The vanilla blacksmithing guide has a clear "Approximate Materials Required for 
 ```
 Rough Stone (133), Coarse Stone (80), Bronze Bar (180), Heavy Stone (105),
 Iron Bar (230), Steel Bar (50), Solid Stone (20), Mageweave Cloth (150),
-Mithril Bar (320), Dense Stone (20), Thorium Bar (420), Rugged Leather (144)
+Mithril Bar (320), Dense Stone (20), Thorium Bar (420), Rugged Leather (72)
 ```
+
+#### Recent Fix:
+- ✅ **Fixed Duplicate Rugged Leather**: Was showing 144 (72x2) due to both regex patterns matching the same line
+- ✅ **Pattern Priority**: Rearranged choice pattern to be checked first, then skip basic pattern for that line
+- ✅ **Correct Quantities**: Now shows accurate 72 for Rugged Leather as per guide specification
 
 ### Git Configuration
 - **Fixed .gitignore**: Shopping lists are now properly tracked as main deliverables
