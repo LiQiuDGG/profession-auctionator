@@ -16,6 +16,7 @@ class AlchemyScraper(WowProfessionScraper):
     
     def __init__(self, rate_limit: float = 2.0):
         super().__init__('alchemy', rate_limit)
+        self.chosen_materials = {}  # Track materials chosen in choice scenarios
         
     def _extract_materials(self, soup: BeautifulSoup) -> List[Dict[str, any]]:
         """
@@ -156,9 +157,23 @@ class AlchemyScraper(WowProfessionScraper):
                         'priority': self._get_material_priority(name)
                     })
         
-        # Select the best choice based on priority (lower = better)
+        # Select the best choice, preferring materials we've already chosen
         if choice_materials:
-            best_choice = min(choice_materials, key=lambda x: x['priority'])
+            # First, check if we've already chosen any of these materials
+            already_chosen = [mat for mat in choice_materials if mat['name'] in self.chosen_materials]
+            
+            if already_chosen:
+                # Use a material we've already chosen, prefer the one we've used most
+                best_choice = max(already_chosen, key=lambda x: self.chosen_materials[x['name']])
+            else:
+                # No previous choice, use priority-based selection
+                best_choice = min(choice_materials, key=lambda x: x['priority'])
+            
+            # Track this choice for future consistency
+            if best_choice['name'] not in self.chosen_materials:
+                self.chosen_materials[best_choice['name']] = 0
+            self.chosen_materials[best_choice['name']] += best_choice['quantity']
+            
             # Remove priority key before returning
             del best_choice['priority']
             materials.append(best_choice)
@@ -332,6 +347,11 @@ class AlchemyScraper(WowProfessionScraper):
                 material_dict[name] = material.copy()
                 
         return list(material_dict.values())
+    
+    def scrape_expansion(self, expansion: str) -> str:
+        """Override to reset chosen materials for each expansion"""
+        self.chosen_materials = {}  # Reset for each expansion
+        return super().scrape_expansion(expansion)
 
 
 def main():
