@@ -16,19 +16,19 @@ class WowProfessionScraper:
     
     BASE_URL = "https://www.wow-professions.com"
     
-    # Expansion mapping with their guide URL patterns
+    # Expansion mapping with their guide URL patterns and expansion numbers
     EXPANSIONS = {
-        'vanilla': 'vanilla',
-        'outland': 'outland', 
-        'northrend': 'northrend',
-        'cataclysm': 'cataclysm',
-        'pandaria': 'pandaria',
-        'draenor': 'draenor',
-        'legion': 'legion',
-        'bfa': 'battle-for-azeroth',
-        'shadowlands': 'shadowlands',
-        'dragonflight': 'dragon-isles',
-        'war_within': 'the-war-within'
+        'vanilla': {'url': 'vanilla', 'number': 0},
+        'outland': {'url': 'outland', 'number': 1}, 
+        'northrend': {'url': 'northrend', 'number': 2},
+        'cataclysm': {'url': 'cataclysm', 'number': 3},
+        'pandaria': {'url': 'pandaria', 'number': 4},
+        'draenor': {'url': 'draenor', 'number': 5},
+        'legion': {'url': 'legion', 'number': 6},
+        'bfa': {'url': 'battle-for-azeroth', 'number': 7},
+        'shadowlands': {'url': 'shadowlands', 'number': 8},
+        'dragonflight': {'url': 'dragon-isles', 'number': 9},
+        'tww': {'url': 'the-war-within', 'number': 10}
     }
     
     def __init__(self, profession: str, rate_limit: float = 2.0):
@@ -79,13 +79,14 @@ class WowProfessionScraper:
         Returns:
             Complete URL to the guide
         """
-        expansion_name = self.EXPANSIONS.get(expansion, expansion)
+        expansion_info = self.EXPANSIONS.get(expansion, {'url': expansion, 'number': 0})
+        expansion_url = expansion_info['url']
         
         # Special case for dragonflight guide URL pattern
         if expansion == 'dragonflight':
-            return f"{self.BASE_URL}/guides/{expansion_name}-{self.profession}-leveling-guide-dragonflight"
+            return f"{self.BASE_URL}/guides/{expansion_url}-{self.profession}-leveling-guide-dragonflight"
         else:
-            return f"{self.BASE_URL}/guides/{expansion_name}-{self.profession}-leveling"
+            return f"{self.BASE_URL}/guides/{expansion_url}-{self.profession}-leveling"
             
     def _extract_materials(self, soup: BeautifulSoup) -> List[Dict[str, any]]:
         """
@@ -405,13 +406,14 @@ class WowProfessionScraper:
         # Default category
         return 'Reagents/Other'
         
-    def _format_for_auctionator(self, materials: List[Dict[str, any]], expansion_name: str) -> str:
+    def _format_for_auctionator(self, materials: List[Dict[str, any]], expansion_name: str, expansion_number: int) -> str:
         """
         Format materials list for Auctionator import
         
         Args:
             materials: List of material dictionaries
             expansion_name: Name of the expansion for the header
+            expansion_number: WoW expansion number for Auctionator format
             
         Returns:
             Formatted string ready for Auctionator import
@@ -424,8 +426,8 @@ class WowProfessionScraper:
         # Create the formatted items list
         items = []
         for material in materials:
-            # Wrap item name in quotes for exact search
-            formatted_item = f'"{material["name"]}";{material["category"]};0;0;0;0;0;0;0;0;;#;0;{material["quantity"]}'
+            # Wrap item name in quotes for exact search, use correct expansion number
+            formatted_item = f'"{material["name"]}";{material["category"]};0;0;0;0;0;0;0;0;;#;{expansion_number};{material["quantity"]}'
             items.append(formatted_item)
             
         # Format: Shopping List Name^Item1^Item2^Item3...
@@ -448,13 +450,16 @@ class WowProfessionScraper:
         soup = self._get_page(url)
         if not soup:
             print(f"Failed to fetch page for {expansion}")
-            return f"{expansion.title()} {self.profession.title()}\n"
+            expansion_name = expansion.replace('_', ' ').title()
+            return f"{expansion_name} {self.profession.title()}\n"
             
         materials = self._extract_materials(soup)
+        expansion_info = self.EXPANSIONS.get(expansion, {'url': expansion, 'number': 0})
         expansion_name = expansion.replace('_', ' ').title()
+        expansion_number = expansion_info['number']
         
         print(f"Found {len(materials)} materials for {expansion} {self.profession}")
-        return self._format_for_auctionator(materials, expansion_name)
+        return self._format_for_auctionator(materials, expansion_name, expansion_number)
         
     def scrape_all_expansions(self) -> str:
         """
