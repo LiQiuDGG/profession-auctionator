@@ -289,6 +289,83 @@ Mithril Bar (320), Dense Stone (20), Thorium Bar (420), Rugged Leather (72)
 - ✅ **99 Total URLs**: 9 professions × 11 expansions = optimal coverage matrix
 - ✅ **Production Ready**: Laser-focused configuration supports only professions that benefit from Auctionator shopping lists
 
+### Scraper Enhancement for Better Materials Detection (2025-01-28)
+
+#### Problem Analysis:
+After thorough investigation, we found that Legion and Draenor expansion guides don't have the standard "Approximate Materials Required" sections that the scraper relies on. Instead, they use skill range-based organization ("4-50", "50-70", etc.) which makes material extraction unreliable.
+
+#### Improvements Implemented:
+
+**1. Skip Problematic Expansions:**
+- Added logic to explicitly skip Draenor and Legion expansions
+- Clear messaging when expansions are skipped due to incompatible guide structure
+- Prevents empty or malformed material lists
+
+**2. Enhanced Materials Section Detection:**
+- New `_find_materials_section()` method that searches for multiple heading patterns:
+  - "Approximate Materials Required"
+  - "Materials Required" 
+  - "Shopping List"
+  - "Materials Needed"
+  - "Reagents Needed"
+- Searches across multiple HTML tag types (h1-h6, strong, b)
+- Improved content location after headings
+
+**3. Improved Materials Parsing:**
+- New `_parse_materials_section()` method for structured content parsing
+- Enhanced `_parse_material_text()` with multiple quantity/name patterns:
+  - "60x Item" or "60 x Item"
+  - "60 Item"
+  - "Item x 60"
+  - "Item - 60"
+  - "Item: 60"
+- Better text cleaning and validation
+- Quantity > 0 validation
+
+**4. Three-Tier Fallback Strategy:**
+- **Tier 1**: Look for standard materials sections (new enhanced approach)
+- **Tier 2**: Try TradeSkillMaster shopping lists (existing)
+- **Tier 3**: General content parsing (existing wide-net approach)
+
+#### Benefits:
+- More reliable detection of standard materials sections
+- Better handling of different guide formats
+- Cleaner material name extraction
+- Explicit handling of incompatible expansions
+- Reduced false positives and malformed entries
+
+#### Current Status:
+- **Compatible Expansions**: Vanilla, Outland, Northrend, Cataclysm, Pandaria, BfA, Shadowlands, Dragonflight, TWW
+- **Skipped Expansions**: Draenor, Legion (incompatible guide structure)
+- **Testing Complete**: Improved scraper successfully tested on both Alchemy and Blacksmithing
+
+### Scraper Testing Results (2025-01-28)
+
+#### Alchemy Results:
+✅ **Major Improvements:**
+- Draenor and Legion now properly skipped (clean empty sections instead of malformed data)
+- All other expansions maintained their material counts and quality
+- Still has some remaining issues (Northrend malformed choice, TWW complex entries) but overall much cleaner
+
+#### Blacksmithing Results:
+✅ **Significant Cleanup:**
+- **Before**: Multiple malformed entries like "-300", "-100", broken Draenor/Legion data
+- **After**: Clean empty sections for Draenor/Legion, much better material extraction
+- **Dragonflight**: Fixed from 2 malformed entries to 4 proper materials (Draconium Ore, Serevite Ore, Primal Flux, Primal Molten Alloy)
+- **TWW**: Improved from 1 to 4 materials (Bismuth, Ironclaw Ore, Aqirite, Crystalline Powder)
+- **BfA**: Still has 1 malformed "-300" entry but also has proper "Platinum Ore" now
+
+#### Overall Impact:
+- **Files are much cleaner** with proper empty sections instead of malformed data
+- **Draenor/Legion skip logic working perfectly** - prevents bad data from being scraped
+- **Enhanced parsing is finding more legitimate materials** in compatible expansions
+- **Significant improvement in data quality** especially for Blacksmithing
+
+#### Remaining Issues:
+- Some complex entries in TWW still need manual cleanup
+- BfA still has some malformed entries mixed with good ones
+- Northrend choice parsing could be improved further
+
 ### Project Structure
 
 ```
@@ -299,7 +376,7 @@ profession-auctionator/
 │   ├── alchemy.txt                    # Alchemy materials (all expansions)
 │   └── blacksmithing.txt              # Blacksmithing materials
 └── python-scripts/                    # Automation tools
-    ├── base_scraper.py                # Core scraping functionality
+    ├── base_scraper.py                # Core scraping functionality (enhanced)
     ├── profession_guides_config.json  # Profession guide URLs configuration
     ├── scrape_alchemy.py              # Alchemy-specific scraper
     ├── scrape_blacksmithing.py        # Blacksmithing scraper

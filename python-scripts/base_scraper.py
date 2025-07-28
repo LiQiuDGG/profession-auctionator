@@ -149,12 +149,19 @@ class WowProfessionScraper:
         """
         materials = []
         
-        # Look for TradeSkillMaster shopping list first
+        # First, look for the standard "Approximate Materials Required" section
+        materials_section = self._find_materials_section(soup)
+        if materials_section:
+            materials.extend(self._parse_materials_section(materials_section))
+            if materials:  # If we found materials in the standard section, return them
+                return materials
+        
+        # Look for TradeSkillMaster shopping list as fallback
         tsm_materials = self._extract_tsm_shopping_list(soup)
         if tsm_materials:
             materials.extend(tsm_materials)
             
-        # Look for common material list patterns - cast a wide net
+        # Look for common material list patterns - cast a wide net as final fallback
         sections = soup.find_all(['div', 'section', 'table', 'article', 'main', 'content'], 
                                 class_=re.compile(r'material|shopping|ingredient|guide|content|post|article', re.I))
         
@@ -223,6 +230,161 @@ class WowProfessionScraper:
                         break
                     
         return materials
+    
+    def _find_materials_section(self, soup: BeautifulSoup):
+        """
+        Find the standard "Approximate Materials Required" section or similar
+        
+        Args:
+            soup: BeautifulSoup object of the guide page
+            
+        Returns:
+            BeautifulSoup section containing materials list or None
+        """
+        # Look for common materials section headings
+        materials_headings = [
+            'approximate materials required',
+            'materials required',
+            'shopping list',
+            'materials needed',
+            'reagents needed'
+        ]
+        
+        # Find headings that might contain materials
+        for heading_text in materials_headings:
+            # Look for various heading tags
+            for tag in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'strong', 'b']:
+                headings = soup.find_all(tag, string=re.compile(heading_text, re.I))
+                for heading in headings:
+                    # Find the next sibling or parent that contains the materials list
+                    section = self._find_materials_content_after_heading(heading)
+                    if section:
+                        return section
+                        
+        return None
+    
+    def _find_materials_content_after_heading(self, heading):
+        """
+        Find the content section after a materials heading
+        
+        Args:
+            heading: BeautifulSoup element containing the heading
+            
+        Returns:
+            BeautifulSoup section with materials content or None
+        """
+        # Try to find the next sibling that contains a list
+        current = heading
+        for _ in range(10):  # Look at next 10 siblings
+            current = current.find_next_sibling()
+            if not current:
+                break
+                
+            # Check if this sibling contains list items or structured content
+            if current.find_all(['li', 'tr', 'div']):
+                # Verify it contains material-like content
+                text = current.get_text().lower()
+                if any(keyword in text for keyword in ['x ', 'ore', 'herb', 'leather', 'cloth', 'stone']):
+                    return current
+                    
+        # If no sibling found, try looking in the parent's next sibling
+        parent = heading.find_parent()
+        if parent:
+            next_section = parent.find_next_sibling()
+            if next_section and next_section.find_all(['li', 'tr', 'div']):
+                return next_section
+                
+        return None
+    
+    def _parse_materials_section(self, section) -> List[Dict[str, any]]:
+        """
+        Parse materials from a standard materials section
+        
+        Args:
+            section: BeautifulSoup section containing materials
+            
+        Returns:
+            List of material dictionaries
+        """
+        materials = []
+        
+        # Look for list items first (most common format)
+        list_items = section.find_all('li')
+        if list_items:
+            for item in list_items:
+                material = self._parse_material_text(item.get_text(strip=True))
+                if material:
+                    materials.append(material)
+        else:
+            # Look for table rows
+            rows = section.find_all('tr')
+            if rows:
+                for row in rows:
+                    # Skip header rows
+                    if row.find('th'):
+                        continue
+                    material = self._parse_material_text(row.get_text(strip=True))
+                    if material:
+                        materials.append(material)
+            else:
+                # Parse plain text line by line
+                text_lines = section.get_text().split('\n')
+                for line in text_lines:
+                    line = line.strip()
+                    if line:
+                        material = self._parse_material_text(line)
+                        if material:
+                            materials.append(material)
+                            
+        return materials
+    
+    def _parse_material_text(self, text: str) -> Optional[Dict[str, any]]:
+        """
+        Parse a single line of text to extract material information
+        
+        Args:
+            text: Text line that might contain material info
+            
+        Returns:
+            Material dictionary or None if no valid material found
+        """
+        if not text or len(text) < 5:
+            return None
+            
+        # Try to extract quantity and item name using regex
+        patterns = [
+            r'(\d+)\s*x\s*(.+)',  # "60x Peacebloom" or "60 x Peacebloom"
+            r'(\d+)\s+(.+)',      # "60 Peacebloom"
+            r'(.+)\s*[x×]\s*(\d+)',  # "Peacebloom x 60"
+            r'(.+)\s*[-–]\s*(\d+)',  # "Peacebloom - 60"
+            r'(.+)\s*:\s*(\d+)',     # "Peacebloom: 60"
+        ]
+        
+        for pattern in patterns:
+            match = re.search(pattern, text)
+            if match:
+                if pattern in patterns[:2]:  # First two patterns (quantity first)
+                    quantity = int(match.group(1))
+                    name = match.group(2).strip()
+                else:  # Other patterns (name first)
+                    name = match.group(1).strip()
+                    quantity = int(match.group(2))
+                
+                # Clean up the name
+                name = re.sub(r'\([^)]*\)', '', name)  # Remove parentheses
+                name = re.sub(r'\[[^\]]*\]', '', name)  # Remove brackets
+                name = re.sub(r'\s+', ' ', name).strip()  # Normalize whitespace
+                
+                # Skip if it looks like a recipe or skill level
+                if self._is_valid_material(name) and quantity > 0:
+                    return {
+                        'name': name,
+                        'category': self._categorize_item(name),
+                        'quantity': quantity
+                    }
+                break
+                
+        return None
         
     def _extract_tsm_shopping_list(self, soup: BeautifulSoup) -> List[Dict[str, any]]:
         """
@@ -486,13 +648,19 @@ class WowProfessionScraper:
     def scrape_expansion(self, expansion: str) -> str:
         """
         Scrape materials for a specific expansion
-        
+
         Args:
             expansion: Expansion key from EXPANSIONS dict
             
         Returns:
             Formatted materials string for Auctionator
         """
+        # Skip problematic expansions that don't have proper material sections
+        if expansion in ['draenor', 'legion']:
+            print(f"Skipping {expansion} {self.profession} - guide structure not compatible with scraper")
+            expansion_name = self._get_expansion_display_name(expansion)
+            return f"{expansion_name} {self.profession.title()}\n"
+            
         url = self._build_guide_url(expansion)
         print(f"Scraping {expansion} {self.profession} from: {url}")
         

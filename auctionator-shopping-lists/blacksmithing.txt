@@ -8,14 +8,14 @@ Cataclysm Blacksmithing^"Obsidium Bar";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;390^"E
 
 Mists of Pandaria Blacksmithing^"Ghost Iron Bar";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;595^"Spirit of Harmony";Reagents/Elemental;0;0;0;0;0;0;0;0;;#;;1
 
-Warlords of Draenor Blacksmithing^"-300";Reagents/Other;0;0;0;0;0;0;0;0;;#;;1^"x [Truesteel Reshaper] - 2940 x True Iron Ore";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;98
+Warlords of Draenor Blacksmithing
 
-Legion Blacksmithing^"-300";Reagents/Other;0;0;0;0;0;0;0;0;;#;;1^"-100";Reagents/Other;0;0;0;0;0;0;0;0;;#;;1
+Legion Blacksmithing
 
 Battle for Azeroth Blacksmithing^"-300";Reagents/Other;0;0;0;0;0;0;0;0;;#;;1^"Platinum Ore";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;120
 
 Shadowlands Blacksmithing^"Laestrite Ore";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;360^"Elethium Ore";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;30^"Solenium Ore";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;100^"Oxxein Ore";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;100^"Phaedrum Ore";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;100^"Sinvyr Ore";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;100^"Luminous Flux";Reagents/Enhancement;0;0;0;0;0;0;0;0;;#;;580
 
-Dragonflight Blacksmithing^"-300";Reagents/Other;0;0;0;0;0;0;0;0;;#;;1^". #Getting more Sparks";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;4
+Dragonflight Blacksmithing^"Draconium Ore";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;300^"Serevite Ore";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;650^"Primal Flux";Reagents/Enhancement;0;0;0;0;0;0;0;0;;#;;170^"Primal Molten Alloy";Reagents/Elemental;0;0;0;0;0;0;0;0;;#;;168
 
-TWW Blacksmithing^"Ironclaw Ore";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;63
+TWW Blacksmithing^"Bismuth";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;565^"Ironclaw Ore";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;63^"Aqirite";Reagents/Other;0;0;0;0;0;0;0;0;;#;;5^"Crystalline Powder";Reagents/Gem;0;0;0;0;0;0;0;0;;#;;40
