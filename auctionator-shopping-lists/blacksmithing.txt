@@ -3,3 +3,19 @@ Vanilla (Classic) Blacksmithing^"Rough Stone";Reagents/Gem;0;0;0;0;0;0;0;0;;#;;1
 Burning Crusade (Outland) Blacksmithing^"Fel Iron Bar";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;102^"Netherweave Cloth";Reagents/Cloth;0;0;0;0;0;0;0;0;;#;;100^"Adamantite Bar";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;180
 
 Wrath of the Lich King (Northrend) Blacksmithing^"Cobalt Bar";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;180^"Saronite Bar";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;721^"Crystallized Air";Reagents/Gem;0;0;0;0;0;0;0;0;;#;;30^"Eternal Earth";Reagents/Elemental;0;0;0;0;0;0;0;0;;#;;39
+
+Cataclysm Blacksmithing^"Obsidium Bar";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;390^"Elementium Bar";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;340^"Volatile Earth";Reagents/Elemental;0;0;0;0;0;0;0;0;;#;;10^"Hardened Elementium Bar";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;2
+
+Mists of Pandaria Blacksmithing^"Ghost Iron Bar";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;595^"Spirit of Harmony";Reagents/Elemental;0;0;0;0;0;0;0;0;;#;;1
+
+Warlords of Draenor Blacksmithing^"-300";Reagents/Other;0;0;0;0;0;0;0;0;;#;;1^"x [Truesteel Reshaper] - 2940 x True Iron Ore";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;98
+
+Legion Blacksmithing^"-300";Reagents/Other;0;0;0;0;0;0;0;0;;#;;1^"-100";Reagents/Other;0;0;0;0;0;0;0;0;;#;;1
+
+Battle for Azeroth Blacksmithing^"-300";Reagents/Other;0;0;0;0;0;0;0;0;;#;;1^"Platinum Ore";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;120
+
+Shadowlands Blacksmithing^"Laestrite Ore";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;360^"Elethium Ore";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;30^"Solenium Ore";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;100^"Oxxein Ore";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;100^"Phaedrum Ore";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;100^"Sinvyr Ore";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;100^"Luminous Flux";Reagents/Enhancement;0;0;0;0;0;0;0;0;;#;;580
+
+Dragonflight Blacksmithing^"-300";Reagents/Other;0;0;0;0;0;0;0;0;;#;;1^". #Getting more Sparks";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;4
+
+TWW Blacksmithing^"Ironclaw Ore";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;63
