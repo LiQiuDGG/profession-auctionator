@@ -74,8 +74,8 @@ def main():
     parser = argparse.ArgumentParser(description='Scrape WoW Blacksmithing materials from wow-professions.com')
     parser.add_argument('--expansion', '-e', type=str, 
                        help='Specific expansion to scrape (e.g., vanilla, outland, northrend)')
-    parser.add_argument('--output', '-o', type=str, default='blacksmithing.txt',
-                       help='Output filename (default: blacksmithing.txt)')
+    parser.add_argument('--output', '-o', type=str, default='../auctionator-shopping-lists/blacksmithing.txt',
+                       help='Output filename (default: ../auctionator-shopping-lists/blacksmithing.txt)')
     parser.add_argument('--rate-limit', '-r', type=float, default=2.0,
                        help='Rate limit between requests in seconds (default: 2.0)')
     

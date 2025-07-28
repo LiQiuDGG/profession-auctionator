@@ -100,36 +100,267 @@ class WowProfessionScraper:
         """
         materials = []
         
-        # Look for common material list patterns
-        # This is a generic implementation - profession-specific scrapers should override
+        # Look for TradeSkillMaster shopping list first
+        tsm_materials = self._extract_tsm_shopping_list(soup)
+        if tsm_materials:
+            materials.extend(tsm_materials)
+            
+        # Look for common material list patterns - cast a wide net
+        sections = soup.find_all(['div', 'section', 'table', 'article', 'main', 'content'], 
+                                class_=re.compile(r'material|shopping|ingredient|guide|content|post|article', re.I))
         
-        # Try to find shopping list or materials sections
-        sections = soup.find_all(['div', 'section', 'table'], 
-                                class_=re.compile(r'material|shopping|ingredient', re.I))
-        
+        # If no specific sections found, search the entire body
+        if not sections:
+            sections = [soup.find('body')] if soup.find('body') else [soup]
+            
         for section in sections:
-            # Look for item lists
-            items = section.find_all(['li', 'tr', 'div'])
-            for item in items:
-                text = item.get_text(strip=True)
+            if not section:
+                continue
                 
-                # Try to extract quantity and item name using regex
-                match = re.search(r'(\d+)x?\s*(.+)', text)
-                if match:
-                    quantity = int(match.group(1))
-                    name = match.group(2).strip()
+            # Handle choice sections (like Draenor)
+            choice_materials = self._handle_choice_section(section)
+            if choice_materials:
+                materials.extend(choice_materials)
+                continue
+                
+            # Look for item lists in various elements
+            items = section.find_all(['li', 'tr', 'div', 'p', 'span', 'strong', 'b'])
+            
+            # Also parse all text content line by line
+            full_text = section.get_text()
+            text_lines = [line.strip() for line in full_text.split('\n') if line.strip()]
+            
+            all_text_sources = []
+            for item in items:
+                item_text = item.get_text(strip=True)
+                if item_text:
+                    all_text_sources.append(item_text)
+            all_text_sources.extend(text_lines)
+            
+            for text in all_text_sources:
+                if not text or len(text) < 5:
+                    continue
                     
-                    # Skip if it looks like a recipe or skill level
-                    if any(skip_word in name.lower() for skip_word in ['recipe', 'skill', 'level', 'point']):
-                        continue
+                # Try to extract quantity and item name using regex
+                patterns = [
+                    r'(\d+)x?\s*(.+)',  # "60x Peacebloom" or "60 Peacebloom"
+                    r'(.+)\s*[x×]\s*(\d+)',  # "Peacebloom x 60"
+                    r'(.+)\s*[-–]\s*(\d+)',  # "Peacebloom - 60"
+                    r'(.+)\s*:\s*(\d+)',  # "Peacebloom: 60"
+                ]
+                
+                for pattern in patterns:
+                    match = re.search(pattern, text)
+                    if match:
+                        if pattern == patterns[0]:  # First pattern
+                            quantity = int(match.group(1))
+                            name = match.group(2).strip()
+                        else:  # Other patterns
+                            name = match.group(1).strip()
+                            quantity = int(match.group(2))
                         
-                    materials.append({
-                        'name': name,
-                        'category': self._categorize_item(name),
-                        'quantity': quantity
-                    })
+                        # Clean up the name
+                        name = re.sub(r'\([^)]*\)', '', name)  # Remove parentheses
+                        name = re.sub(r'\[[^\]]*\]', '', name)  # Remove brackets
+                        name = re.sub(r'\s+', ' ', name).strip()  # Normalize whitespace
+                        
+                        # Skip if it looks like a recipe or skill level
+                        if self._is_valid_material(name):
+                            materials.append({
+                                'name': name,
+                                'category': self._categorize_item(name),
+                                'quantity': quantity
+                            })
+                        break
                     
         return materials
+        
+    def _extract_tsm_shopping_list(self, soup: BeautifulSoup) -> List[Dict[str, any]]:
+        """
+        Extract TradeSkillMaster shopping list if available
+        
+        Args:
+            soup: BeautifulSoup object of the guide page
+            
+        Returns:
+            List of material dictionaries from TSM list
+        """
+        materials = []
+        
+        # Look for TSM shopping list sections
+        tsm_sections = soup.find_all(['div', 'section', 'pre', 'code'], 
+                                    class_=re.compile(r'tsm|tradeskill|shopping', re.I))
+        
+        for section in tsm_sections:
+            text = section.get_text()
+            
+            # Look for TSM string patterns
+            if '/tsm' in text.lower() or 'tradeskillmaster' in text.lower():
+                # Extract items from TSM string
+                lines = text.split('\n')
+                for line in lines:
+                    if '/' in line and any(char.isdigit() for char in line):
+                        # Parse TSM item strings like "item:765/50" (item ID / quantity)
+                        tsm_match = re.search(r'item:(\d+)/(\d+)', line)
+                        if tsm_match:
+                            item_id = tsm_match.group(1)
+                            quantity = int(tsm_match.group(2))
+                            
+                            # Try to find item name in the same section
+                            item_name = self._resolve_item_name(item_id, soup)
+                            if item_name:
+                                materials.append({
+                                    'name': item_name,
+                                    'category': self._categorize_item(item_name),
+                                    'quantity': quantity
+                                })
+                                
+        return materials
+        
+    def _handle_choice_section(self, section) -> List[Dict[str, any]]:
+        """
+        Handle sections with multiple material choices (like Draenor alternatives)
+        Always choose the most available but historically lowest cost option
+        
+        Args:
+            section: BeautifulSoup section containing choices
+            
+        Returns:
+            List of selected materials
+        """
+        materials = []
+        text = section.get_text().lower()
+        
+        # Look for choice indicators
+        choice_indicators = ['choose', 'alternative', 'option', 'either', 'or', 'cheapest']
+        if not any(indicator in text for indicator in choice_indicators):
+            return materials
+            
+        # Extract all potential choices
+        choices = []
+        lines = section.get_text().split('\n')
+        
+        for line in lines:
+            match = re.search(r'(\d+)x?\s*(.+)', line.strip())
+            if match:
+                quantity = int(match.group(1))
+                name = match.group(2).strip()
+                
+                # Clean up choice text
+                name = re.sub(r'\(.*?\)', '', name)  # Remove parenthetical notes
+                name = re.sub(r'or\s+', '', name, flags=re.I)  # Remove "or"
+                name = name.strip()
+                
+                if self._is_valid_material(name):
+                    choices.append({
+                        'name': name,
+                        'category': self._categorize_item(name),
+                        'quantity': quantity,
+                        'priority': self._get_material_priority(name)
+                    })
+        
+        # Select best choice based on priority (lower is better)
+        if choices:
+            best_choice = min(choices, key=lambda x: x['priority'])
+            materials.append(best_choice)
+            
+        return materials
+        
+    def _get_material_priority(self, item_name: str) -> int:
+        """
+        Get priority for material selection (lower = better choice)
+        Based on historical availability and cost
+        
+        Args:
+            item_name: Name of the material
+            
+        Returns:
+            Priority score (lower is better)
+        """
+        name_lower = item_name.lower()
+        
+        # Highly available, low-cost materials (priority 1)
+        common_materials = [
+            'copper', 'tin', 'iron', 'light leather', 'medium leather',
+            'peacebloom', 'silverleaf', 'earthroot', 'mageroyal',
+            'linen cloth', 'wool cloth', 'rough stone', 'coarse stone'
+        ]
+        
+        # Moderately available materials (priority 2)
+        moderate_materials = [
+            'silver', 'gold', 'mithril', 'heavy leather', 'thick leather',
+            'briarthorn', 'stranglekelp', 'bruiseweed', 'wild steelbloom',
+            'silk cloth', 'mageweave cloth', 'heavy stone', 'solid stone'
+        ]
+        
+        # Less common, higher cost materials (priority 3)
+        uncommon_materials = [
+            'thorium', 'rugged leather', 'black lotus', 'ghost mushroom',
+            'gromsblood', 'blindweed', 'runecloth', 'dense stone'
+        ]
+        
+        # Check priority levels
+        for material in common_materials:
+            if material in name_lower:
+                return 1
+                
+        for material in moderate_materials:
+            if material in name_lower:
+                return 2
+                
+        for material in uncommon_materials:
+            if material in name_lower:
+                return 3
+                
+        # Default priority for unknown materials
+        return 2
+        
+    def _resolve_item_name(self, item_id: str, soup: BeautifulSoup) -> Optional[str]:
+        """
+        Try to resolve item ID to item name from the page context
+        
+        Args:
+            item_id: WoW item ID
+            soup: BeautifulSoup object to search for item names
+            
+        Returns:
+            Item name if found, None otherwise
+        """
+        # This is a simplified implementation
+        # In a full implementation, you might query WoW API or maintain an item database
+        
+        # Look for item names in the same section as the TSM string
+        text = soup.get_text()
+        lines = text.split('\n')
+        
+        # Try to find lines that might contain item names near the item ID
+        for i, line in enumerate(lines):
+            if item_id in line:
+                # Check nearby lines for item names
+                for j in range(max(0, i-3), min(len(lines), i+4)):
+                    potential_name = lines[j].strip()
+                    if potential_name and not any(char.isdigit() for char in potential_name[:3]):
+                        # Clean potential name
+                        potential_name = re.sub(r'[^\w\s\'-]', '', potential_name)
+                        if len(potential_name) > 3 and len(potential_name) < 50:
+                            return potential_name
+                            
+        return None
+        
+    def _is_valid_material(self, name: str) -> bool:
+        """
+        Enhanced validation for material names
+        """
+        if not name or len(name) < 3:
+            return False
+            
+        # Skip obvious non-materials
+        skip_words = ['recipe', 'skill', 'level', 'point', 'guide', 'section', 
+                     'total', 'cost', 'gold', 'silver', 'copper', 'requires',
+                     'choose', 'option', 'alternative', 'either', 'cheapest']
+        
+        name_lower = name.lower()
+        return not any(skip_word in name_lower for skip_word in skip_words)
         
     def _categorize_item(self, item_name: str) -> str:
         """
@@ -243,10 +474,14 @@ class WowProfessionScraper:
         
         Args:
             content: Formatted materials content
-            filename: Output filename (defaults to {profession}.txt)
+            filename: Output filename (defaults to ../auctionator-shopping-lists/{profession}.txt)
         """
         if filename is None:
-            filename = f"{self.profession}.txt"
+            filename = f"../auctionator-shopping-lists/{self.profession}.txt"
+            
+        # Ensure the directory exists
+        import os
+        os.makedirs(os.path.dirname(filename), exist_ok=True)
             
         with open(filename, 'w', encoding='utf-8') as f:
             f.write(content)

@@ -88,8 +88,8 @@ def main():
     parser = argparse.ArgumentParser(description='Scrape WoW Leatherworking materials from wow-professions.com')
     parser.add_argument('--expansion', '-e', type=str, 
                        help='Specific expansion to scrape (e.g., vanilla, outland, northrend)')
-    parser.add_argument('--output', '-o', type=str, default='leatherworking.txt',
-                       help='Output filename (default: leatherworking.txt)')
+    parser.add_argument('--output', '-o', type=str, default='../auctionator-shopping-lists/leatherworking.txt',
+                       help='Output filename (default: ../auctionator-shopping-lists/leatherworking.txt)')
     parser.add_argument('--rate-limit', '-r', type=float, default=2.0,
                        help='Rate limit between requests in seconds (default: 2.0)')
     

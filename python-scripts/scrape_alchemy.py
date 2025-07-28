@@ -24,15 +24,33 @@ class AlchemyScraper(WowProfessionScraper):
         """
         materials = []
         
-        # Look for shopping list sections first
+        # First, look for the specific materials section with id="materials"
+        materials_section = soup.find('h2', id='materials')
+        if materials_section:
+            # Find the next ul element after the materials heading
+            materials_list = materials_section.find_next('ul')
+            if materials_list:
+                materials.extend(self._parse_materials_list(materials_list))
+        
+        # Also look for any other materials lists in the document
+        # Look for headings that indicate material lists
+        material_headings = soup.find_all(['h1', 'h2', 'h3'], 
+                                        string=re.compile(r'material|shopping|ingredient|required', re.I))
+        
+        for heading in material_headings:
+            # Find the next ul after each heading
+            materials_list = heading.find_next('ul')
+            if materials_list:
+                materials.extend(self._parse_materials_list(materials_list))
+        
+        # Look for shopping list sections
         shopping_sections = soup.find_all(['div', 'section'], 
                                         class_=re.compile(r'shopping|material', re.I))
         
-        if shopping_sections:
-            for section in shopping_sections:
-                materials.extend(self._parse_shopping_section(section))
+        for section in shopping_sections:
+            materials.extend(self._parse_shopping_section(section))
                 
-        # If no shopping section found, look for recipe sections
+        # Look for recipe sections if still no materials
         if not materials:
             recipe_sections = soup.find_all(['div', 'section'], 
                                           class_=re.compile(r'recipe|guide', re.I))
@@ -47,20 +65,60 @@ class AlchemyScraper(WowProfessionScraper):
         # Deduplicate and aggregate quantities
         return self._deduplicate_materials(materials)
         
+    def _parse_materials_list(self, materials_list) -> List[Dict[str, any]]:
+        """Parse a <ul> element containing materials"""
+        materials = []
+        
+        list_items = materials_list.find_all('li')
+        for item in list_items:
+            # Get text content, which should be in format like "60x Peacebloom"
+            text = item.get_text(strip=True)
+            
+            # Parse the format: "60x Peacebloom"
+            match = re.search(r'(\d+)x\s*(.+)', text)
+            if match:
+                quantity = int(match.group(1))
+                name = match.group(2).strip()
+                
+                # Clean up the name (remove any extra whitespace or artifacts)
+                name = self._clean_item_name(name)
+                
+                if self._is_valid_material(name):
+                    materials.append({
+                        'name': name,
+                        'category': self._categorize_item(name),
+                        'quantity': quantity
+                    })
+                    
+        return materials
+        
     def _parse_shopping_section(self, section) -> List[Dict[str, any]]:
         """Parse a shopping list section"""
         materials = []
         
-        # Look for list items
-        items = section.find_all(['li', 'p', 'div'])
+        # Look for list items and text content
+        items = section.find_all(['li', 'p', 'div', 'strong', 'b'])
+        
+        # Also parse the raw text for cases where items aren't in structured elements
+        full_text = section.get_text()
+        text_lines = [line.strip() for line in full_text.split('\n') if line.strip()]
+        
+        # Combine structured items with text lines
+        all_text_sources = []
         for item in items:
-            text = item.get_text(strip=True)
-            
+            all_text_sources.append(item.get_text(strip=True))
+        all_text_sources.extend(text_lines)
+        
+        for text in all_text_sources:
+            if not text or len(text) < 5:
+                continue
+                
             # Try multiple regex patterns for quantity extraction
             patterns = [
                 r'(\d+)x?\s*(.+)',  # "60x Peacebloom" or "60 Peacebloom"
                 r'(.+)\s*[x×]\s*(\d+)',  # "Peacebloom x 60"
                 r'(.+)\s*[-–]\s*(\d+)',  # "Peacebloom - 60"
+                r'(.+)\s*:\s*(\d+)',  # "Peacebloom: 60"
             ]
             
             for pattern in patterns:
@@ -181,8 +239,8 @@ def main():
     parser = argparse.ArgumentParser(description='Scrape WoW Alchemy materials from wow-professions.com')
     parser.add_argument('--expansion', '-e', type=str, 
                        help='Specific expansion to scrape (e.g., vanilla, outland, northrend)')
-    parser.add_argument('--output', '-o', type=str, default='alchemy.txt',
-                       help='Output filename (default: alchemy.txt)')
+    parser.add_argument('--output', '-o', type=str, default='../auctionator-shopping-lists/alchemy.txt',
+                       help='Output filename (default: ../auctionator-shopping-lists/alchemy.txt)')
     parser.add_argument('--rate-limit', '-r', type=float, default=2.0,
                        help='Rate limit between requests in seconds (default: 2.0)')
     
