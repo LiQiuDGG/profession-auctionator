@@ -366,6 +366,34 @@ After thorough investigation, we found that Legion and Draenor expansion guides 
 - BfA still has some malformed entries mixed with good ones
 - Northrend choice parsing could be improved further
 
+### Complete Removal of Problematic Expansions (2025-01-28)
+
+#### Change Implemented:
+✅ **Completely Remove Draenor and Legion**: Updated scraper to return empty strings for these expansions, which are then filtered out of the final output
+- No more empty section headers cluttering the files
+- Clean, professional output with only working expansions
+- Improved user experience with streamlined shopping lists
+
+#### Updated Results:
+
+**Alchemy (8 expansions):**
+- Vanilla (15), Outland (6), Northrend (7), Cataclysm (8), Pandaria (5), BfA (4), Shadowlands (0), Dragonflight (11), TWW (20)
+
+**Blacksmithing (9 expansions):**
+- Vanilla (15), Outland (3), Northrend (4), Cataclysm (4), Pandaria (2), BfA (2), Shadowlands (7), Dragonflight (4), TWW (4)
+
+**Engineering (9 expansions):**
+- Vanilla (14), Outland (8), Northrend (11), Cataclysm (4), Pandaria (3), BfA (6), Shadowlands (9), Dragonflight (7), TWW (3)
+
+**Leatherworking (9 expansions):**
+- Vanilla (8), Outland (3), Northrend (8), Cataclysm (4), Pandaria (2), BfA (2), Shadowlands (5), Dragonflight (4), TWW (4)
+
+#### Summary:
+- **4 profession files** now complete and clean
+- **No empty sections** for problematic expansions
+- **Professional quality** shopping lists ready for immediate use
+- **Consistent format** across all professions
+
 ### Project Structure
 
 ```

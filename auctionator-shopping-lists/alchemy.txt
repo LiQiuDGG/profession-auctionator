@@ -8,10 +8,6 @@ Cataclysm Alchemy^"Cinderbloom";Reagents/Herb;0;0;0;0;0;0;0;0;;#;;85^"Azshara's 
 
 Mists of Pandaria Alchemy^"Green Tea Leaf";Reagents/Herb;0;0;0;0;0;0;0;0;;#;;40^"Snow Lily";Reagents/Herb;0;0;0;0;0;0;0;0;;#;;20^"Fool's Cap";Reagents/Herb;0;0;0;0;0;0;0;0;;#;;20^"Rain Poppy";Reagents/Herb;0;0;0;0;0;0;0;0;;#;;30^"Silkweed";Reagents/Herb;0;0;0;0;0;0;0;0;;#;;50
 
-Warlords of Draenor Alchemy
-
-Legion Alchemy
-
 Battle for Azeroth Alchemy^"Siren's Pollen";Reagents/Other;0;0;0;0;0;0;0;0;;#;;210^"Riverbud";Reagents/Other;0;0;0;0;0;0;0;0;;#;;210^"Anchor Weed";Reagents/Herb;0;0;0;0;0;0;0;0;;#;;495^"Zin'anthid";Reagents/Other;0;0;0;0;0;0;0;0;;#;;330
 
 Shadowlands Alchemy

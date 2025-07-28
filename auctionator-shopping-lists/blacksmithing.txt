@@ -8,10 +8,6 @@ Cataclysm Blacksmithing^"Obsidium Bar";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;390^"E
 
 Mists of Pandaria Blacksmithing^"Ghost Iron Bar";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;595^"Spirit of Harmony";Reagents/Elemental;0;0;0;0;0;0;0;0;;#;;1
 
-Warlords of Draenor Blacksmithing
-
-Legion Blacksmithing
-
 Battle for Azeroth Blacksmithing^"-300";Reagents/Other;0;0;0;0;0;0;0;0;;#;;1^"Platinum Ore";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;120
 
 Shadowlands Blacksmithing^"Laestrite Ore";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;360^"Elethium Ore";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;30^"Solenium Ore";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;100^"Oxxein Ore";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;100^"Phaedrum Ore";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;100^"Sinvyr Ore";Reagents/Metal;0;0;0;0;0;0;0;0;;#;;100^"Luminous Flux";Reagents/Enhancement;0;0;0;0;0;0;0;0;;#;;580

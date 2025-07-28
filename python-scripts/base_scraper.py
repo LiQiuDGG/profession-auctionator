@@ -658,8 +658,7 @@ class WowProfessionScraper:
         # Skip problematic expansions that don't have proper material sections
         if expansion in ['draenor', 'legion']:
             print(f"Skipping {expansion} {self.profession} - guide structure not compatible with scraper")
-            expansion_name = self._get_expansion_display_name(expansion)
-            return f"{expansion_name} {self.profession.title()}\n"
+            return ""  # Return empty string to exclude from output entirely
             
         url = self._build_guide_url(expansion)
         print(f"Scraping {expansion} {self.profession} from: {url}")
@@ -689,7 +688,8 @@ class WowProfessionScraper:
         
         for expansion in self.EXPANSIONS.keys():
             expansion_materials = self.scrape_expansion(expansion)
-            all_materials.append(expansion_materials)
+            if expansion_materials.strip():  # Only add non-empty results
+                all_materials.append(expansion_materials)
             
         return '\n'.join(all_materials)
         

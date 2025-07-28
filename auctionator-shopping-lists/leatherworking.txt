@@ -1,0 +1,17 @@
+Vanilla (Classic) Leatherworking^"Ruined Leather Scraps";Reagents/Leather;0;0;0;0;0;0;0;0;;#;;57^"Medium Hide";Reagents/Leather;0;0;0;0;0;0;0;0;;#;;15^"Light Leather";Reagents/Leather;0;0;0;0;0;0;0;0;;#;;260^"Medium Leather";Reagents/Leather;0;0;0;0;0;0;0;0;;#;;160^"Heavy Hide";Reagents/Leather;0;0;0;0;0;0;0;0;;#;;20^"Heavy Leather";Reagents/Leather;0;0;0;0;0;0;0;0;;#;;220^"Thick Leather";Reagents/Leather;0;0;0;0;0;0;0;0;;#;;410^"Rugged Leather";Reagents/Leather;0;0;0;0;0;0;0;0;;#;;410
+
+Burning Crusade (Outland) Leatherworking^"Knothide Leather";Reagents/Leather;0;0;0;0;0;0;0;0;;#;;1340^"Thick Clefthoof Leather";Reagents/Leather;0;0;0;0;0;0;0;0;;#;;32^"Fel Hide";Reagents/Leather;0;0;0;0;0;0;0;0;;#;;32
+
+Wrath of the Lich King (Northrend) Leatherworking^"Borean Leather";Reagents/Leather;0;0;0;0;0;0;0;0;;#;;1982^"Crystallized Wateror65xCrystallized Shadow";Reagents/Leather;0;0;0;0;0;0;0;0;;#;;65^"Eternal Water";Reagents/Elemental;0;0;0;0;0;0;0;0;;#;;18^"Frozen Orb";Reagents/Other;0;0;0;0;0;0;0;0;;#;;15^"Nerubian Chitinor10xIcy Dragonscale";Reagents/Leather;0;0;0;0;0;0;0;0;;#;;10^"Eternal Shadow";Reagents/Leather;0;0;0;0;0;0;0;0;;#;;50^"Eternal Fire";Reagents/Elemental;0;0;0;0;0;0;0;0;;#;;50^"Arctic Fur";Reagents/Leather;0;0;0;0;0;0;0;0;;#;;12
+
+Cataclysm Leatherworking^"Savage Leather";Reagents/Leather;0;0;0;0;0;0;0;0;;#;;1565^"Volatile Fire";Reagents/Elemental;0;0;0;0;0;0;0;0;;#;;112^"Volatile Water";Reagents/Elemental;0;0;0;0;0;0;0;0;;#;;50^"Pristine Hide";Reagents/Leather;0;0;0;0;0;0;0;0;;#;;3
+
+Mists of Pandaria Leatherworking^"Mist-Touched Leather";Reagents/Leather;0;0;0;0;0;0;0;0;;#;;640^"Spirit of Harmony";Reagents/Elemental;0;0;0;0;0;0;0;0;;#;;1
+
+Battle for Azeroth Leatherworking^"-300";Reagents/Other;0;0;0;0;0;0;0;0;;#;;1^"- 175";Reagents/Other;0;0;0;0;0;0;0;0;;#;;1
+
+Shadowlands Leatherworking^"Desolate Leather";Reagents/Leather;0;0;0;0;0;0;0;0;;#;;655^"Pallid Bone";Reagents/Leather;0;0;0;0;0;0;0;0;;#;;28^"Callous Hide";Reagents/Leather;0;0;0;0;0;0;0;0;;#;;45^"Curing Salt";Reagents/Chemical;0;0;0;0;0;0;0;0;;#;;45^"Penumbra Thread";Reagents/Thread;0;0;0;0;0;0;0;0;;#;;72
+
+Dragonflight Leatherworking^"Resilient Leather";Reagents/Leather;0;0;0;0;0;0;0;0;;#;;600^"Adamant Scales";Reagents/Scale;0;0;0;0;0;0;0;0;;#;;175^"Dense Hide";Reagents/Leather;0;0;0;0;0;0;0;0;;#;;65^"Lustrous Scaled Hide";Reagents/Leather;0;0;0;0;0;0;0;0;;#;;12
+
+TWW Leatherworking^"Stormcharged Leather";Reagents/Leather;0;0;0;0;0;0;0;0;;#;;340^"Gloom Chitin";Reagents/Other;0;0;0;0;0;0;0;0;;#;;305^"Sunless Carapace";Reagents/Gem;0;0;0;0;0;0;0;0;;#;;4^"Thunderous Hide";Reagents/Leather;0;0;0;0;0;0;0;0;;#;;6
