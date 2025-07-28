@@ -156,19 +156,6 @@
       "shadowlands": "/guides/shadowlands-cooking-leveling-guide",
       "dragonflight": "/guides/dragon-isles-cooking-leveling-guide-dragonflight",
       "tww": "/guides/wow-cooking-leveling-guide"
-    },
-    "fishing": {
-      "vanilla": null,
-      "outland": null,
-      "northrend": null,
-      "cataclysm": null,
-      "pandaria": null,
-      "draenor": null,
-      "legion": "/guides/legion-fishing-leveling",
-      "bfa": "/guides/zandalari-kul-tiran-bfa-fishing-leveling-guide",
-      "shadowlands": "/guides/shadowlands-fishing-leveling-guide",
-      "dragonflight": "/guides/dragon-isles-fishing-leveling-guide-dragonflight",
-      "tww": "/guides/wow-fishing-leveling-guide"
     }
   },
   "expansion_info": {
