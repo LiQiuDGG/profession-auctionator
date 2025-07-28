@@ -28,9 +28,10 @@ The main goal is to collect and format profession leveling materials from guides
 - **Northrend**: 7 materials ✅ (Has choice items that need cleanup)
 - **Cataclysm**: 8 materials ✅ (Choice logic handled)
 - **Pandaria**: 5 materials ✅ (Special inline parsing implemented for discovery-based guides)
+- **Draenor**: 2 materials ✅ (Frostweed, Fireweed - basic parsing working)
 - **Dragonflight**: 11 materials ✅ (Some duplicate detection issues to resolve)
-- **Draenor, Legion**: 0 materials (Different guide structures, no consolidated shopping lists)
-- **BFA, Shadowlands, War Within**: 404 errors (guides may not exist or different URLs)
+- **Legion**: 0 materials (Different guide structure, no consolidated shopping lists)
+- **BFA, Shadowlands, TWW**: 404 errors (guides may not exist or have different URLs)
 
 ### Format Improvements Made
 - ✅ **Correct Auctionator Format**: Shopping list name on same line with ^ separators
@@ -56,14 +57,16 @@ The main goal is to collect and format profession leveling materials from guides
 - ✅ **Corrected Rain Poppy**: Correctly categorized as Reagents/Herb
 
 #### Still Outstanding:
-- 🔍 **Investigate empty expansions**: Pandaria, Draenor, Legion, BfA, Shadowlands, TWW show no materials
 - 🔧 **Fix Northrend malformed text**: "Dark Jade, 5xHuge Citrine, 5xEternal Fire)OR" needs cleanup
 - 🔧 **Fix Dragonflight incomplete item**: "Awakened" should be "Awakened Order" or similar
 - 📝 **Review remaining categorizations**: Ensure all herbs are properly categorized
+- 🔄 **Legion expansion**: Still shows 0 materials (different guide structure)
+- ❌ **BfA, Shadowlands, TWW**: 404 errors (guides may not exist or have different URLs)
 
 #### Investigation Results:
 - ✅ **Dreaming Glory duplication**: No actual duplication found - only 1 entry with quantity 80 in Outland
-- 🔍 **Pandaria structure**: Uses discovery-based progression, no consolidated materials list. Herbs mentioned inline: "20 x Green Tea Leaf", priority order given
+- ✅ **Pandaria structure**: Successfully implemented special parsing for discovery-based guides with inline herb mentions
+- ✅ **Draenor materials**: Found 2 materials (Frostweed, Fireweed) using existing parsing logic
 
 ### Git Configuration
 - **Fixed .gitignore**: Shopping lists are now properly tracked as main deliverables
