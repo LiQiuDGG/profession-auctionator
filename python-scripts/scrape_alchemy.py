@@ -90,6 +90,10 @@ class AlchemyScraper(WowProfessionScraper):
         for table in tables:
             materials.extend(self._parse_material_table(table))
             
+        # Special handling for Pandaria-style inline herb mentions
+        if not materials:
+            materials.extend(self._parse_pandaria_style(soup))
+            
         # Deduplicate and aggregate quantities
         return self._deduplicate_materials(materials)
         
@@ -285,6 +289,86 @@ class AlchemyScraper(WowProfessionScraper):
                             
         return materials
         
+    def _parse_pandaria_style(self, soup: BeautifulSoup) -> List[Dict[str, any]]:
+        """Parse Pandaria-style guides with inline herb mentions and priority lists"""
+        materials = []
+        
+        # Get all text content
+        full_text = soup.get_text()
+        
+        # Look for inline herb mentions like "20 x Green Tea Leaf"
+        inline_patterns = [
+            r'(\d+)\s*x\s*([A-Z][a-zA-Z\s\']+(?:Leaf|Cap|Poppy|Lily|weed))',
+            r'(\d+)\s*([A-Z][a-zA-Z\s\']+(?:Leaf|Cap|Poppy|Lily|weed))'
+        ]
+        
+        found_herbs = {}
+        
+        for pattern in inline_patterns:
+            matches = re.finditer(pattern, full_text)
+            for match in matches:
+                quantity = int(match.group(1))
+                name = match.group(2).strip()
+                
+                # Clean up the name
+                name = self._clean_item_name(name)
+                
+                if self._is_valid_material(name) and 'herb' in name.lower() or any(suffix in name.lower() for suffix in ['leaf', 'cap', 'poppy', 'lily', 'weed']):
+                    if name in found_herbs:
+                        found_herbs[name] += quantity
+                    else:
+                        found_herbs[name] = quantity
+        
+        # Look for priority order mentions like "Green Tea Leaf > Silkweed > Rain Poppy > Snow Lily > Fool's Cap"
+        priority_pattern = r'([A-Z][a-zA-Z\s\']+(?:Leaf|Cap|Poppy|Lily|weed))\s*>\s*([A-Z][a-zA-Z\s\']+(?:Leaf|Cap|Poppy|Lily|weed))'
+        priority_matches = re.finditer(priority_pattern, full_text)
+        
+        # Extract herbs from priority list
+        priority_herbs = []
+        priority_text_matches = re.findall(r'([A-Z][a-zA-Z\s\']+(?:Leaf|Cap|Poppy|Lily|weed))', full_text)
+        
+        for herb_name in priority_text_matches:
+            clean_name = self._clean_item_name(herb_name)
+            if self._is_valid_material(clean_name) and clean_name not in priority_herbs:
+                # Add to priority herbs if it looks like a Pandaria herb
+                pandaria_herbs = ['green tea leaf', 'silkweed', 'rain poppy', 'snow lily', "fool's cap"]
+                if any(pandaria_herb in clean_name.lower() for pandaria_herb in pandaria_herbs):
+                    priority_herbs.append(clean_name)
+        
+        # Create materials from found herbs
+        for name, quantity in found_herbs.items():
+            materials.append({
+                'name': name,
+                'category': self._categorize_item(name),
+                'quantity': quantity
+            })
+        
+        # Add priority herbs with estimated quantities if not already found
+        estimated_quantities = {
+            'Green Tea Leaf': 100,  # Most commonly used
+            'Silkweed': 50,
+            'Rain Poppy': 30,
+            'Snow Lily': 20,
+            "Fool's Cap": 20
+        }
+        
+        for herb in priority_herbs:
+            if herb not in found_herbs:
+                # Estimate quantity based on herb type
+                estimated_qty = 50  # Default
+                for est_herb, qty in estimated_quantities.items():
+                    if est_herb.lower() in herb.lower():
+                        estimated_qty = qty
+                        break
+                        
+                materials.append({
+                    'name': herb,
+                    'category': self._categorize_item(herb),
+                    'quantity': estimated_qty
+                })
+                
+        return materials
+        
     def _clean_item_name(self, name: str) -> str:
         """Clean up item names by removing unwanted text"""
         # Remove common unwanted patterns
@@ -329,7 +413,8 @@ class AlchemyScraper(WowProfessionScraper):
             
         # Skip obvious non-materials
         skip_words = ['recipe', 'skill', 'level', 'point', 'guide', 'section', 
-                     'total', 'cost', 'gold', 'silver', 'copper', 'requires']
+                     'total', 'cost', 'gold', 'silver', 'copper', 'requires',
+                     'you should', 'prioritize', 'potions', 'that use']
         
         name_lower = name.lower()
         return not any(skip_word in name_lower for skip_word in skip_words)

@@ -27,8 +27,9 @@ The main goal is to collect and format profession leveling materials from guides
 - **Outland**: 6 materials ✅ (Choice logic working, selecting Dreamfoil from alternatives)
 - **Northrend**: 7 materials ✅ (Has choice items that need cleanup)
 - **Cataclysm**: 8 materials ✅ (Choice logic handled)
+- **Pandaria**: 5 materials ✅ (Special inline parsing implemented for discovery-based guides)
 - **Dragonflight**: 11 materials ✅ (Some duplicate detection issues to resolve)
-- **Pandaria, Draenor, Legion**: 0 materials (Different guide structures, no consolidated shopping lists)
+- **Draenor, Legion**: 0 materials (Different guide structures, no consolidated shopping lists)
 - **BFA, Shadowlands, War Within**: 404 errors (guides may not exist or different URLs)
 
 ### Format Improvements Made
@@ -42,6 +43,27 @@ The main goal is to collect and format profession leveling materials from guides
 - Some choice text cleanup needed (Northrend has "Dark Jade, 5xHuge Citrine, 5xEternal Fire)OR")
 - Dragonflight has incomplete item name "Awakened" vs "Awakened Order"
 - Priority system for choice selection could be refined
+
+### Recent Session Progress (Latest)
+
+#### Completed Fixes:
+- ✅ **Fixed Dreamfoil and Ragveil categorization**: Now properly categorized as Reagents/Herb
+- ✅ **Fixed Cataclysm herbs**: Azshara's Veil, Twilight Jasmine, Whiptail now correctly categorized
+- ✅ **Removed expansion field**: Auctionator format now uses `;;#;;` instead of expansion numbers
+- ✅ **Enhanced choice logic**: Improved consistent material selection across expansions
+- ✅ **Fixed Outland materials**: Added missing Golden Sansam (10) and corrected quantities
+- ✅ **Fixed Pandaria parsing**: Updated logic to correctly parse inline herb mentions and prioritize order
+- ✅ **Corrected Rain Poppy**: Correctly categorized as Reagents/Herb
+
+#### Still Outstanding:
+- 🔍 **Investigate empty expansions**: Pandaria, Draenor, Legion, BfA, Shadowlands, TWW show no materials
+- 🔧 **Fix Northrend malformed text**: "Dark Jade, 5xHuge Citrine, 5xEternal Fire)OR" needs cleanup
+- 🔧 **Fix Dragonflight incomplete item**: "Awakened" should be "Awakened Order" or similar
+- 📝 **Review remaining categorizations**: Ensure all herbs are properly categorized
+
+#### Investigation Results:
+- ✅ **Dreaming Glory duplication**: No actual duplication found - only 1 entry with quantity 80 in Outland
+- 🔍 **Pandaria structure**: Uses discovery-based progression, no consolidated materials list. Herbs mentioned inline: "20 x Green Tea Leaf", priority order given
 
 ### Git Configuration
 - **Fixed .gitignore**: Shopping lists are now properly tracked as main deliverables
