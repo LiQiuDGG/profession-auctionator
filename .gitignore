@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+*.log
+temp/
+tmp/
+.cache/
+
+# Generated files (can be regenerated with scripts)
+auctionator-shopping-lists/*.txt
+!auctionator-shopping-lists/alchemy.txt
