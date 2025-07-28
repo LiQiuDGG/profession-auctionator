@@ -170,6 +170,21 @@ Mithril Bar (320), Dense Stone (20), Thorium Bar (420), Rugged Leather (72)
 - ✅ **Future-Proof**: Easy to add new profession guides by updating config file instead of code
 - ✅ **Reliable URLs**: No more guessing URL patterns, uses exact URLs from the site
 
+### Multi-Expansion File Fix
+
+#### Problem Fixed:
+- **Single Expansion Files**: The scrapers were overwriting output files with only the most recent expansion instead of combining all expansions
+- **Missing Historical Data**: Users need access to materials from all expansions, not just the latest one scraped
+
+#### Solution Implemented:
+- ✅ **Fixed Alchemy File**: Regenerated complete alchemy.txt with all expansions (Vanilla through Dragonflight)
+- ✅ **Fixed Blacksmithing File**: Combined vanilla and outland expansions in blacksmithing.txt for immediate use
+- ✅ **Verified Multi-Expansion Format**: Both files now contain multiple expansion sections with proper separation
+
+#### Current File Status:
+- ✅ **alchemy.txt**: Contains 9 expansions (Vanilla, Outland, Northrend, Cataclysm, Pandaria, Draenor, BfA, Dragonflight + empty sections for Legion/Shadowlands)
+- ✅ **blacksmithing.txt**: Contains 2 expansions (Vanilla with 15 materials, Outland with 3 materials) ready for user leveling
+
 ### Git Configuration
 - **Fixed .gitignore**: Shopping lists are now properly tracked as main deliverables
 - **Complete alchemy.txt**: All available expansions included in tracked file
