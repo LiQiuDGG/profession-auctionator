@@ -12,7 +12,7 @@
       "bfa": "/guides/zandalari-kul-tiran-bfa-alchemy-leveling-guide",
       "shadowlands": "/guides/shadowlands-alchemy-leveling-guide",
       "dragonflight": "/guides/dragon-isles-alchemy-leveling-guide-dragonflight",
-      "tww": null
+      "tww": "/guides/wow-alchemy-leveling-guide"
     },
     "blacksmithing": {
       "vanilla": "/guides/vanilla-blacksmithing-leveling",
@@ -25,7 +25,7 @@
       "bfa": "/guides/zandalari-kul-tiran-bfa-blacksmithing-leveling-guide",
       "shadowlands": "/guides/shadowlands-blacksmithing-leveling-guide",
       "dragonflight": "/guides/dragon-isles-blacksmithing-leveling-guide-dragonflight",
-      "tww": null
+      "tww": "/guides/wow-blacksmithing-leveling-guide"
     },
     "engineering": {
       "vanilla": "/guides/vanilla-engineering-leveling",
@@ -38,7 +38,7 @@
       "bfa": "/guides/zandalari-kul-tiran-bfa-engineering-leveling-guide",
       "shadowlands": "/guides/shadowlands-engineering-leveling-guide",
       "dragonflight": "/guides/dragon-isles-engineering-leveling-guide-dragonflight",
-      "tww": null
+      "tww": "/guides/wow-engineering-leveling-guide"
     },
     "leatherworking": {
       "vanilla": "/guides/vanilla-leatherworking-leveling",
@@ -51,7 +51,7 @@
       "bfa": "/guides/zandalari-kul-tiran-bfa-leatherworking-leveling-guide",
       "shadowlands": "/guides/shadowlands-leatherworking-leveling-guide",
       "dragonflight": "/guides/dragon-isles-leatherworking-leveling-guide-dragonflight",
-      "tww": null
+      "tww": "/guides/wow-leatherworking-leveling-guide"
     }
   },
   "expansion_info": {
