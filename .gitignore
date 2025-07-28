@@ -28,6 +28,7 @@ temp/
 tmp/
 .cache/
 
-# Generated files (can be regenerated with scripts)
-auctionator-shopping-lists/*.txt
-!auctionator-shopping-lists/alchemy.txt
+# Generated files - shopping lists are tracked as they're the main deliverable
+# Only ignore temporary or test files
+auctionator-shopping-lists/temp_*.txt
+auctionator-shopping-lists/test_*.txt

@@ -10,17 +10,68 @@ The main goal is to collect and format profession leveling materials from guides
 
 - **alchemy.txt**: Contains materials lists for Alchemy leveling across expansions (Vanilla through Dragonflight) ✓
 - **Python automation**: Complete scraping system with individual profession scripts ✓
+- **Enhanced scrapers**: Updated with TradeSkillMaster integration and choice logic ✓
+- **Project structure**: Organized with separate folders for scripts and shopping lists ✓
 
-### Python Scripts
+## Recent Updates (Latest Session)
 
-- **base_scraper.py**: Core scraping functionality with rate limiting and Auctionator formatting
-- **scrape_alchemy.py**: Alchemy-specific scraper with enhanced material extraction
-- **scrape_blacksmithing.py**: Blacksmithing materials scraper  
-- **scrape_engineering.py**: Engineering materials scraper
-- **scrape_leatherworking.py**: Leatherworking materials scraper
-- **scrape_all.py**: Master script to run all profession scrapers with delays
-- **requirements.txt**: Python dependencies (requests, beautifulsoup4, lxml)
-- **venv/**: Virtual environment for isolated dependencies
+### Enhanced Scraping Features
+- **TradeSkillMaster Integration**: Scrapers now detect and parse TSM shopping strings
+- **Choice Logic**: Handles alternative materials (like Draenor choices) by selecting historically lowest-cost options
+- **Material Priority System**: Ranks materials by availability and cost (common=1, moderate=2, rare=3)
+- **Improved Material Detection**: Enhanced parsing to find materials sections by ID and heading text
+- **Proper Project Structure**: Updated all scripts to use `../auctionator-shopping-lists/` output path
+
+### Current Scraping Results (Updated)
+- **Vanilla**: 15 materials ✅ (Perfect format with ^ separators and quoted items)
+- **Outland**: 6 materials ✅ (Choice logic working, selecting Dreamfoil from alternatives)
+- **Northrend**: 7 materials ✅ (Has choice items that need cleanup)
+- **Cataclysm**: 8 materials ✅ (Choice logic handled)
+- **Dragonflight**: 11 materials ✅ (Some duplicate detection issues to resolve)
+- **Pandaria, Draenor, Legion**: 0 materials (Different guide structures, no consolidated shopping lists)
+- **BFA, Shadowlands, War Within**: 404 errors (guides may not exist or different URLs)
+
+### Format Improvements Made
+- ✅ **Correct Auctionator Format**: Shopping list name on same line with ^ separators
+- ✅ **Quoted Items**: All items wrapped in quotes for exact search functionality  
+- ✅ **Choice Logic**: Handles alternative materials by selecting best priority option
+- ✅ **Bold Text Detection**: Finds materials lists under bold headings (like Outland)
+- ✅ **Deduplication**: Aggregates quantities for duplicate items
+
+### Outstanding Issues
+- Some choice text cleanup needed (Northrend has "Dark Jade, 5xHuge Citrine, 5xEternal Fire)OR")
+- Dragonflight has incomplete item name "Awakened" vs "Awakened Order"
+- Priority system for choice selection could be refined
+
+### Git Configuration
+- **Fixed .gitignore**: Shopping lists are now properly tracked as main deliverables
+- **Complete alchemy.txt**: All available expansions included in tracked file
+- **Repository Structure**: Both code and output files are version controlled
+
+### Project Structure
+
+```
+profession-auctionator/
+├── README.md                           # Project documentation
+├── CLAUDE.md                          # Development instructions and history
+├── auctionator-shopping-lists/        # Ready-to-use shopping lists
+│   └── alchemy.txt                    # Alchemy materials (all expansions)
+└── python-scripts/                    # Automation tools
+    ├── base_scraper.py                # Core scraping functionality
+    ├── scrape_alchemy.py              # Alchemy-specific scraper
+    ├── scrape_blacksmithing.py        # Blacksmithing scraper
+    ├── scrape_engineering.py          # Engineering scraper
+    ├── scrape_leatherworking.py       # Leatherworking scraper
+    ├── scrape_all.py                  # Master script for all professions
+    ├── requirements.txt               # Python dependencies
+    └── venv/                          # Virtual environment
+```
+
+### Repository Information
+
+- **GitHub**: https://github.com/LiQiuDGG/profession-auctionator
+- **SSH Key**: Uses ~/.ssh/liqiud for authentication
+- **Git Config**: LiQiuDGG <liqiud@gmail.com>
 
 ## Auctionator Format Requirements
 
@@ -60,6 +111,7 @@ Materials are sourced from wow-professions.com:
 
 ### Virtual Environment Setup
 ```bash
+cd python-scripts
 python3 -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
@@ -67,6 +119,8 @@ pip install -r requirements.txt
 
 ### Running Individual Profession Scrapers
 ```bash
+cd python-scripts
+
 # Scrape all expansions for a profession
 python scrape_alchemy.py
 
@@ -74,11 +128,13 @@ python scrape_alchemy.py
 python scrape_alchemy.py --expansion vanilla
 
 # Custom output file and rate limiting
-python scrape_alchemy.py --output my_alchemy.txt --rate-limit 3.0
+python scrape_alchemy.py --output ../auctionator-shopping-lists/my_alchemy.txt --rate-limit 3.0
 ```
 
 ### Running All Professions
 ```bash
+cd python-scripts
+
 # Scrape all professions, all expansions
 python scrape_all.py
 
@@ -87,6 +143,33 @@ python scrape_all.py --expansion vanilla
 
 # Scrape single profession via master script
 python scrape_all.py --profession alchemy
+```
+
+### Git Operations
+```bash
+# Git is configured to always use the liqiud SSH key
+git add .
+git commit -m "Update message"
+git push
+
+# Manual SSH key usage (if needed):
+GIT_SSH_COMMAND="ssh -i ~/.ssh/liqiud" git push
+```
+
+### Development Workflow
+```bash
+# Always update CLAUDE.md before committing!
+# 1. Make changes to code/files
+# 2. Update CLAUDE.md with session notes
+# 3. Add, commit, and push changes
+
+git add .
+git commit -m "Descriptive commit message
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>"
+git push
 ```
 
 ### Available Options

@@ -1,84 +1,21 @@
-Vanilla Alchemy
-"Peacebloom";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;60^"Silverleaf";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;60^"Briarthorn";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;105^"Mageroyal";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;30^"Bruiseweed";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;35^"Stranglekelp";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;50^"Liferoot";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;20^"Kingsblood";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;30^"Goldthorn";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;30^"Wild Steelbloom";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;10^"Sungrass";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;30^"Khadgar's Whisker";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;40^"Blindweed";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;10^"Gromsblood";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;40^"Sorrowmoss";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;40^"Dreamfoil";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;15^"Golden Sansam";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;28^"Mountain Silversage";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;14^"Icecap";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;10
+Vanilla Alchemy^"Peacebloom";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;120^"Briarthorn";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;210^"Mageroyal";Reagents/Other;0;0;0;0;0;0;0;0;;#;0;60^"Bruiseweed";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;70^"Stranglekelp";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;100^"Liferoot";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;40^"Kingsblood";Reagents/Other;0;0;0;0;0;0;0;0;;#;0;60^"Wild Steelbloom";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;20^"Sungrass";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;60^"Khadgar's Whisker";Reagents/Other;0;0;0;0;0;0;0;0;;#;0;80^"Blindweed";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;20^"Gromsblood";Reagents/Other;0;0;0;0;0;0;0;0;;#;0;80^"Sorrowmoss";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;80^"Dreamfoil";Reagents/Other;0;0;0;0;0;0;0;0;;#;0;30^"Icecap";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;20
 
-Outland Alchemy
-Felweed;Reagents/Herb;0;0;0;0;0;0;0;0;;#;1;40
-Golden Sansam;Reagents/Herb;0;0;0;0;0;0;0;0;;#;1;24
-Dreamfoil;Reagents/Herb;0;0;0;0;0;0;0;0;;#;1;14
-Mountain Silversage;Reagents/Herb;0;0;0;0;0;0;0;0;;#;1;14
-Ragveil;Reagents/Herb;0;0;0;0;0;0;0;0;;#;1;20
-Dreaming Glory;Reagents/Herb;0;0;0;0;0;0;0;0;;#;1;80
-Netherbloom;Reagents/Herb;0;0;0;0;0;0;0;0;;#;1;10
-Nightmare Vine;Reagents/Herb;0;0;0;0;0;0;0;0;;#;1;40
+Outland Alchemy^"Felweed";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;40^"Dreamfoil";Reagents/Other;0;0;0;0;0;0;0;0;;#;0;14^"Ragveil";Reagents/Other;0;0;0;0;0;0;0;0;;#;0;20^"Dreaming Glory";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;80^"Netherbloom";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;10^"Nightmare Vine";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;40
 
-Northrend Alchemy
-Talandra's Rose;Reagents/Herb;0;0;0;0;0;0;0;0;;#;2;24
-Tiger Lily;Reagents/Herb;0;0;0;0;0;0;0;0;;#;2;26
-Goldclover;Reagents/Herb;0;0;0;0;0;0;0;0;;#;2;165
-Adder's Tongue;Reagents/Herb;0;0;0;0;0;0;0;0;;#;2;24
-Icethorn;Reagents/Herb;0;0;0;0;0;0;0;0;;#;2;20
-Lichbloom;Reagents/Herb;0;0;0;0;0;0;0;0;;#;2;165
-Dark Jade;Reagents/Gem;0;0;0;0;0;0;0;0;;#;2;5
-Huge Citrine;Reagents/Gem;0;0;0;0;0;0;0;0;;#;2;5
-Eternal Fire;Reagents/Elemental;0;0;0;0;0;0;0;0;;#;2;5
-Bloodstone;Reagents/Gem;0;0;0;0;0;0;0;0;;#;2;5
-Chalcedony;Reagents/Gem;0;0;0;0;0;0;0;0;;#;2;5
-Eternal Air;Reagents/Elemental;0;0;0;0;0;0;0;0;;#;2;5
-Frost Lotus;Reagents/Herb;0;0;0;0;0;0;0;0;;#;2;15
-Crystallized Life;Reagents/Elemental;0;0;0;0;0;0;0;0;;#;2;45
+Northrend Alchemy^"Talandra's Rose";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;24^"Tiger Lily";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;26^"Adder's Tongue";Reagents/Other;0;0;0;0;0;0;0;0;;#;0;24^"Icethorn";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;20^"Lichbloom";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;165^"Dark Jade, 5xHuge Citrine, 5xEternal Fire)OR";Reagents/Gem;0;0;0;0;0;0;0;0;;#;0;5^"Frost Lotus";Reagents/Elemental;0;0;0;0;0;0;0;0;;#;0;15
 
-Cataclysm Alchemy
-Cinderbloom;Reagents/Herb;0;0;0;0;0;0;0;0;;#;3;85
-Azshara's Veil;Reagents/Herb;0;0;0;0;0;0;0;0;;#;3;30
-Heartblossom;Reagents/Herb;0;0;0;0;0;0;0;0;;#;3;25
-Volatile Life;Reagents/Elemental;0;0;0;0;0;0;0;0;;#;3;45
-Twilight Jasmine;Reagents/Herb;0;0;0;0;0;0;0;0;;#;3;42
-Whiptail;Reagents/Herb;0;0;0;0;0;0;0;0;;#;3;60
-Alicite;Reagents/Gem;0;0;0;0;0;0;0;0;;#;3;15
-Zephyrite;Reagents/Gem;0;0;0;0;0;0;0;0;;#;3;15
-Nightstone;Reagents/Gem;0;0;0;0;0;0;0;0;;#;3;15
+Cataclysm Alchemy^"Cinderbloom";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;85^"Azshara's Veil";Reagents/Other;0;0;0;0;0;0;0;0;;#;0;15^"Heartblossom";Reagents/Herb;0;0;0;0;0;0;0;0;;#;0;25^"Volatile Life";Reagents/Elemental;0;0;0;0;0;0;0;0;;#;0;45^"Twilight Jasmine";Reagents/Other;0;0;0;0;0;0;0;0;;#;0;27^"Whiptail";Reagents/Other;0;0;0;0;0;0;0;0;;#;0;60^"Alicite";Reagents/Other;0;0;0;0;0;0;0;0;;#;0;15^"Zephyrite";Reagents/Other;0;0;0;0;0;0;0;0;;#;0;15
 
 Pandaria Alchemy
-Green Tea Leaf;Reagents/Herb;0;0;0;0;0;0;0;0;;#;4;60
-Snow Lily;Reagents/Herb;0;0;0;0;0;0;0;0;;#;4;40
-Fool's Cap;Reagents/Herb;0;0;0;0;0;0;0;0;;#;4;40
+
+Draenor Alchemy
 
 Legion Alchemy
-Yseralline Seed;Reagents/Herb;0;0;0;0;0;0;0;0;;#;6;208
-Ancient Healing Potion;Reagents/Potion;0;0;0;0;0;0;0;0;;#;6;5
-Ancient Mana Potion;Reagents/Potion;0;0;0;0;0;0;0;0;;#;6;5
-Starlight Rose;Reagents/Herb;0;0;0;0;0;0;0;0;;#;6;470
-Aethril;Reagents/Herb;0;0;0;0;0;0;0;0;;#;6;650
-Dreamleaf;Reagents/Herb;0;0;0;0;0;0;0;0;;#;6;650
-Fjarnskaggl;Reagents/Herb;0;0;0;0;0;0;0;0;;#;6;650
-Foxflower;Reagents/Herb;0;0;0;0;0;0;0;0;;#;6;650
 
-BfA Alchemy
-Siren's Pollen;Reagents/Herb;0;0;0;0;0;0;0;0;;#;7;70
-Riverbud;Reagents/Herb;0;0;0;0;0;0;0;0;;#;7;605
-Anchor Weed;Reagents/Herb;0;0;0;0;0;0;0;0;;#;7;165
-Zin'anthid;Reagents/Herb;0;0;0;0;0;0;0;0;;#;7;110
-Winter's Kiss;Reagents/Herb;0;0;0;0;0;0;0;0;;#;7;330
-Sea Stalk;Reagents/Herb;0;0;0;0;0;0;0;0;;#;7;580
-Star Moss;Reagents/Herb;0;0;0;0;0;0;0;0;;#;7;955
+Bfa Alchemy
 
 Shadowlands Alchemy
-Rune Etched Vial;Reagents/Consumable;0;0;0;0;0;0;0;0;;#;8;133
-Death Blossom;Reagents/Herb;0;0;0;0;0;0;0;0;;#;8;328
-Rising Glory;Reagents/Herb;0;0;0;0;0;0;0;0;;#;8;169
-Marrowroot;Reagents/Herb;0;0;0;0;0;0;0;0;;#;8;104
-Vigil's Torch;Reagents/Herb;0;0;0;0;0;0;0;0;;#;8;98
-Widowbloom;Reagents/Herb;0;0;0;0;0;0;0;0;;#;8;70
 
-Dragonflight Alchemy
-Hochenblume;Reagents/Herb;0;0;0;0;0;0;0;0;;#;9;410
-Writhebark;Reagents/Herb;0;0;0;0;0;0;0;0;;#;9;35
-Saxifrage;Reagents/Herb;0;0;0;0;0;0;0;0;;#;9;15
-Bubble Poppy;Reagents/Herb;0;0;0;0;0;0;0;0;;#;9;15
-Rousing Frost;Reagents/Elemental;0;0;0;0;0;0;0;0;;#;9;4
-Rousing Air;Reagents/Elemental;0;0;0;0;0;0;0;0;;#;9;2
-Awakened Frost;Reagents/Elemental;0;0;0;0;0;0;0;0;;#;9;34
-Awakened Fire;Reagents/Elemental;0;0;0;0;0;0;0;0;;#;9;20
-Awakened Air;Reagents/Elemental;0;0;0;0;0;0;0;0;;#;9;1
-Awakened Order;Reagents/Elemental;0;0;0;0;0;0;0;0;;#;9;1
-Awakened Earth;Reagents/Elemental;0;0;0;0;0;0;0;0;;#;9;1
+Dragonflight Alchemy^"Rousing Frost";Reagents/Elemental;0;0;0;0;0;0;0;0;;#;0;8^"Rousing Air";Reagents/Elemental;0;0;0;0;0;0;0;0;;#;0;4^"Hochenblume";Reagents/Other;0;0;0;0;0;0;0;0;;#;0;820^"Awakened Frost";Reagents/Elemental;0;0;0;0;0;0;0;0;;#;0;68^"Awakened Fire";Reagents/Elemental;0;0;0;0;0;0;0;0;;#;0;40^"Awakened Air";Reagents/Elemental;0;0;0;0;0;0;0;0;;#;0;2^"Awakened";Reagents/Elemental;0;0;0;0;0;0;0;0;;#;0;2^"Awakened Earth";Reagents/Elemental;0;0;0;0;0;0;0;0;;#;0;2^"Writhebark";Reagents/Other;0;0;0;0;0;0;0;0;;#;0;70^"Saxifrage";Reagents/Other;0;0;0;0;0;0;0;0;;#;0;30^"Bubble Poppy";Reagents/Other;0;0;0;0;0;0;0;0;;#;0;30
+
+War_Within Alchemy
