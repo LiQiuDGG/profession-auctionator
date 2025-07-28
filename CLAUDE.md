@@ -48,6 +48,22 @@ The main goal is to collect and format profession leveling materials from guides
 - **Complete alchemy.txt**: All available expansions included in tracked file
 - **Repository Structure**: Both code and output files are version controlled
 
+### Recent Fixes (Current Session)
+- **Corrected Expansion Numbers**: Fixed Auctionator format to use proper WoW expansion numbering
+  - Vanilla (Classic) = 0
+  - Burning Crusade (Outland) = 1
+  - Wrath of the Lich King (Northrend) = 2
+  - Cataclysm = 3
+  - Mists of Pandaria = 4
+  - Warlords of Draenor = 5
+  - Legion = 6
+  - Battle for Azeroth = 7
+  - Shadowlands = 8
+  - Dragonflight = 9
+  - The War Within (TWW) = 10
+- **Updated Naming**: Changed "war_within" to "tww" for consistency
+- **Enhanced Base Scraper**: Updated expansion mapping with both URL patterns and correct numbers
+
 ### Project Structure
 
 ```
