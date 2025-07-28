@@ -233,6 +233,30 @@ Mithril Bar (320), Dense Stone (20), Thorium Bar (420), Rugged Leather (72)
 - **Updated Naming**: Changed "war_within" to "tww" for consistency
 - **Enhanced Base Scraper**: Updated expansion mapping with both URL patterns and correct numbers
 
+### Comprehensive Profession Configuration (Latest Session)
+
+#### Complete URL Coverage:
+- ✅ **All 13 WoW Professions Mapped**: Expanded config to include all primary, gathering, and secondary professions
+- ✅ **TWW URL Pattern Discovery**: Found that TWW uses `/guides/wow-{profession}-leveling-guide` pattern
+- ✅ **URL Verification**: Tested URLs for all professions across all expansions to confirm availability
+- ✅ **Missing Guide Documentation**: Properly documented unavailable guides (Jewelcrafting TWW, early Fishing guides)
+
+#### Professions Added:
+- **Primary Production**: Tailoring, Enchanting, Inscription, Jewelcrafting (8 total)
+- **Gathering**: Herbalism, Mining, Skinning (3 total)
+- **Secondary**: Cooking, Fishing (2 total)
+
+#### Config File Status:
+- ✅ **Complete Coverage**: 13 professions × 11 expansions = 143 possible guide combinations
+- ✅ **TWW Integration**: 12/13 professions have TWW guides (Jewelcrafting unavailable)
+- ✅ **Fishing Limitation**: Only available from Legion onwards (older guides don't exist)
+- ✅ **Production Ready**: Config file ready for all profession scrapers
+
+#### Results:
+- **Fully Supported**: Alchemy, Blacksmithing, Engineering, Leatherworking, Tailoring, Enchanting, Inscription, Herbalism, Mining, Skinning, Cooking
+- **Partially Supported**: Jewelcrafting (missing TWW), Fishing (missing Vanilla-Draenor)
+- **Ready for Implementation**: All profession scrapers can now use the complete config for full expansion coverage
+
 ### Project Structure
 
 ```
@@ -274,11 +298,24 @@ Key format requirements:
 
 ## Target Professions
 
-Current focus on these primary crafting professions:
+### Primary Professions (Production)
 - Alchemy ✅ (Complete - all expansions)
 - Blacksmithing 🔄 (In Progress - working on Vanilla)
-- Engineering (planned) 
-- Leatherworking (planned)
+- Engineering ✅ (Ready - config updated with all expansion URLs)
+- Leatherworking ✅ (Ready - config updated with all expansion URLs)
+- Tailoring ✅ (Ready - config updated with all expansion URLs)
+- Enchanting ✅ (Ready - config updated with all expansion URLs)
+- Inscription ✅ (Ready - config updated with all expansion URLs)
+- Jewelcrafting ⚠️ (Ready - config updated, TWW guide unavailable)
+
+### Gathering Professions
+- Herbalism ✅ (Ready - config updated with all expansion URLs)
+- Mining ✅ (Ready - config updated with all expansion URLs)
+- Skinning ✅ (Ready - config updated with all expansion URLs)
+
+### Secondary Professions
+- Cooking ✅ (Ready - config updated with all expansion URLs)
+- Fishing ⚠️ (Ready - config updated, older expansion guides unavailable)
 
 ## Data Sources
 
