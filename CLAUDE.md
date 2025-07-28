@@ -68,6 +68,45 @@ The main goal is to collect and format profession leveling materials from guides
 - ✅ **Pandaria structure**: Successfully implemented special parsing for discovery-based guides with inline herb mentions
 - ✅ **Draenor materials**: Found 2 materials (Frostweed, Fireweed) using existing parsing logic
 
+### Current Work: Blacksmithing Implementation
+
+#### Reference Guide:
+- **Overall Guide Index**: https://www.wow-professions.com/profession-leveling-guides#the-war-within
+- **Vanilla Blacksmithing**: https://www.wow-professions.com/guides/vanilla-blacksmithing-leveling
+
+#### Blacksmithing Guide Structure Analysis:
+The vanilla blacksmithing guide has a clear "Approximate Materials Required for 1-300" section with quantities:
+```
+133x Rough Stone
+210x Copper Bar  
+80x Coarse Stone
+7x Silver Bar
+180x Bronze Bar
+105x Heavy Stone
+35x Green Dye
+230x Iron Bar
+50x Steel Bar
+20x Solid Stone
+150x Mageweave Cloth
+320x Mithril Bar
+20x Dense Stone
+420x Thorium Bar
+72x Rugged Leather or 9x Star Ruby
+```
+
+#### Current Status:
+- ✅ **Vanilla Blacksmithing**: Successfully implemented - found 12 materials with proper categorization
+- ✅ **Enhanced Parser**: Added `_parse_materials_required_section()` to target blacksmithing-specific format
+- ✅ **Material Results**: Successfully extracted all key materials (stones, bars, cloth, leather)
+- 📝 **Next Steps**: Test Outland blacksmithing and verify accuracy
+
+#### Vanilla Blacksmithing Results (12 materials):
+```
+Rough Stone (133), Coarse Stone (80), Bronze Bar (180), Heavy Stone (105),
+Iron Bar (230), Steel Bar (50), Solid Stone (20), Mageweave Cloth (150),
+Mithril Bar (320), Dense Stone (20), Thorium Bar (420), Rugged Leather (144)
+```
+
 ### Git Configuration
 - **Fixed .gitignore**: Shopping lists are now properly tracked as main deliverables
 - **Complete alchemy.txt**: All available expansions included in tracked file
@@ -129,8 +168,8 @@ Key format requirements:
 ## Target Professions
 
 Current focus on these primary crafting professions:
-- Alchemy ✓
-- Blacksmithing (planned)
+- Alchemy ✅ (Complete - all expansions)
+- Blacksmithing 🔄 (In Progress - working on Vanilla)
 - Engineering (planned) 
 - Leatherworking (planned)
 
