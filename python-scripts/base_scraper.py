@@ -283,7 +283,8 @@ class WowProfessionScraper:
         common_materials = [
             'copper', 'tin', 'iron', 'light leather', 'medium leather',
             'peacebloom', 'silverleaf', 'earthroot', 'mageroyal',
-            'linen cloth', 'wool cloth', 'rough stone', 'coarse stone'
+            'linen cloth', 'wool cloth', 'rough stone', 'coarse stone',
+            'golden sansam'  # Add Golden Sansam as common since it appears frequently
         ]
         
         # Moderately available materials (priority 2)
@@ -415,8 +416,10 @@ class WowProfessionScraper:
         Returns:
             Formatted string ready for Auctionator import
         """
+        shopping_list_name = f"{expansion_name} {self.profession.title()}"
+        
         if not materials:
-            return f"{expansion_name} {self.profession.title()}\n"
+            return f"{shopping_list_name}\n"
             
         # Create the formatted items list
         items = []
@@ -425,9 +428,9 @@ class WowProfessionScraper:
             formatted_item = f'"{material["name"]}";{material["category"]};0;0;0;0;0;0;0;0;;#;0;{material["quantity"]}'
             items.append(formatted_item)
             
-        # Join with ^ separator and add header
+        # Format: Shopping List Name^Item1^Item2^Item3...
         items_string = '^'.join(items)
-        return f"{expansion_name} {self.profession.title()}\n{items_string}\n"
+        return f"{shopping_list_name}^{items_string}\n"
         
     def scrape_expansion(self, expansion: str) -> str:
         """

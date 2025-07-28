@@ -34,14 +34,41 @@ class AlchemyScraper(WowProfessionScraper):
         
         # Also look for any other materials lists in the document
         # Look for headings that indicate material lists
-        material_headings = soup.find_all(['h1', 'h2', 'h3'], 
-                                        string=re.compile(r'material|shopping|ingredient|required', re.I))
+        all_headings = soup.find_all(['h1', 'h2', 'h3'])
         
-        for heading in material_headings:
-            # Find the next ul after each heading
-            materials_list = heading.find_next('ul')
-            if materials_list:
-                materials.extend(self._parse_materials_list(materials_list))
+        for heading in all_headings:
+            heading_text_lower = heading.get_text(strip=True).lower()
+            
+            # Look for various material list indicators  
+            material_indicators = [
+                'material', 'shopping', 'ingredient', 'required', 
+                'approximate', 'needed', 'reagent', 'herb', 'components'
+            ]
+            
+            if any(indicator in heading_text_lower for indicator in material_indicators):
+                # Find the next ul after each heading
+                materials_list = heading.find_next('ul')
+                if materials_list:
+                    new_materials = self._parse_materials_list(materials_list)
+                    materials.extend(new_materials)
+        
+        # Also look for bold text that indicates materials lists (like Outland)
+        bold_elements = soup.find_all(['strong', 'b'])
+        
+        for bold in bold_elements:
+            bold_text_lower = bold.get_text(strip=True).lower()
+            
+            material_indicators = [
+                'material', 'shopping', 'ingredient', 'required', 
+                'approximate', 'needed', 'reagent', 'herb', 'components'
+            ]
+            
+            if any(indicator in bold_text_lower for indicator in material_indicators):
+                # Find the next ul after this bold text
+                materials_list = bold.find_next('ul')
+                if materials_list:
+                    new_materials = self._parse_materials_list(materials_list)
+                    materials.extend(new_materials)
         
         # Look for shopping list sections
         shopping_sections = soup.find_all(['div', 'section'], 
@@ -71,24 +98,70 @@ class AlchemyScraper(WowProfessionScraper):
         
         list_items = materials_list.find_all('li')
         for item in list_items:
-            # Get text content, which should be in format like "60x Peacebloom"
+            # Get text content, which should be in format like "60x Peacebloom"  
             text = item.get_text(strip=True)
             
-            # Parse the format: "60x Peacebloom"
-            match = re.search(r'(\d+)x\s*(.+)', text)
+            # Check if this item contains choice alternatives (like Outland's choice item)
+            if '/' in text and ('only need' in text.lower() or 'you need' in text.lower()):
+                # This is a choice item, extract all alternatives
+                choice_materials = self._parse_choice_item(text)
+                materials.extend(choice_materials)
+            else:
+                # Parse the format: "60x Peacebloom"
+                match = re.search(r'(\d+)x\s*(.+)', text)
+                if match:
+                    quantity = int(match.group(1))
+                    name = match.group(2).strip()
+                    
+                    # Clean up the name (remove any extra whitespace or artifacts)
+                    name = self._clean_item_name(name)
+                    
+                    if self._is_valid_material(name):
+                        materials.append({
+                            'name': name,
+                            'category': self._categorize_item(name),
+                            'quantity': quantity
+                        })
+                    
+        return materials
+        
+    def _parse_choice_item(self, text: str) -> List[Dict[str, any]]:
+        """Parse a choice item like '14x Golden Sansam / 14x Dreamfoil / 14x Mountain Silversage (you only need 14 from one)'"""
+        materials = []
+        
+        # Split on the explanatory text first
+        if '(' in text:
+            choices_text = text.split('(')[0]
+        else:
+            choices_text = text
+            
+        # Split on / to get individual choices  
+        choices = choices_text.split('/')
+        
+        choice_materials = []
+        for choice in choices:
+            choice = choice.strip()
+            # Parse each choice: "14x Golden Sansam"
+            match = re.search(r'(\d+)x\s*(.+)', choice)
             if match:
                 quantity = int(match.group(1))
                 name = match.group(2).strip()
-                
-                # Clean up the name (remove any extra whitespace or artifacts)
                 name = self._clean_item_name(name)
                 
                 if self._is_valid_material(name):
-                    materials.append({
+                    choice_materials.append({
                         'name': name,
                         'category': self._categorize_item(name),
-                        'quantity': quantity
+                        'quantity': quantity,
+                        'priority': self._get_material_priority(name)
                     })
+        
+        # Select the best choice based on priority (lower = better)
+        if choice_materials:
+            best_choice = min(choice_materials, key=lambda x: x['priority'])
+            # Remove priority key before returning
+            del best_choice['priority']
+            materials.append(best_choice)
                     
         return materials
         
@@ -204,6 +277,32 @@ class AlchemyScraper(WowProfessionScraper):
         name = re.sub(r'\[[^\]]*\]', '', name)  # Remove brackets content
         name = re.sub(r'(recipe|skill|level|point).*', '', name, flags=re.I)  # Remove recipe info
         name = re.sub(r'x\d+$', '', name)  # Remove trailing x numbers
+        
+        # Handle choice text patterns more comprehensively
+        # Look for patterns like "Golden Sansam / 14x Dreamfoil / 14x Mountain Silversage (you only need 14 from one)"
+        if '/' in name and ('only need' in name.lower() or 'choose' in name.lower() or 'one' in name.lower()):
+            # Split on / and take the first option, clean up quantity
+            first_choice = name.split('/')[0].strip()
+            # Extract just the item name if it has quantity info
+            choice_match = re.search(r'(\d+x\s*)?(.+)', first_choice)
+            if choice_match:
+                name = choice_match.group(2).strip()
+            else:
+                name = first_choice
+        
+        # Handle choice text like "and 15xAzshara's VeilOR15xNightstoneand 15xTwilight Jasmine"
+        elif 'OR' in name or ' or ' in name.lower():
+            name = re.split(r'\s+OR\s+|\s+or\s+', name, flags=re.I)[0]
+            
+        # Remove "and XXx" patterns that indicate additional choices
+        name = re.sub(r'and\s+\d+x\w+.*', '', name, flags=re.I)
+        
+        # Remove trailing conjunctions and numbers
+        name = re.sub(r'\s+(and|or)\s*.*', '', name, flags=re.I)
+        
+        # Remove explanatory text in parentheses at the end
+        name = re.sub(r'\s*\([^)]*\)\s*$', '', name)
+        
         name = re.sub(r'\s+', ' ', name)  # Normalize whitespace
         
         return name.strip()
