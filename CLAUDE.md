@@ -135,6 +135,41 @@ Mithril Bar (320), Dense Stone (20), Thorium Bar (420), Rugged Leather (72)
 - ✅ **Production File**: Created clean blacksmithing.txt with only vanilla and outland expansions
 - ✅ **Blacksmithing Complete**: First profession successfully parsing summary-only materials ✅
 
+### URL Configuration System Implementation
+
+#### Problem Identified:
+- **Dynamic URL Construction Issues**: The scrapers were using dynamic URL construction which led to 404 errors for expansions like BfA, Shadowlands, and TWW
+- **Inconsistent URL Patterns**: Different expansions use different URL patterns (e.g., BfA uses "zandalari-kul-tiran-bfa-{profession}-leveling-guide")
+- **Site Structure Changes**: URL patterns changed over time and the dynamic construction couldn't keep up
+
+#### Solution Implemented:
+- ✅ **Created Config File**: `profession_guides_config.json` with all actual profession guide URLs scraped from the main index page
+- ✅ **Updated Base Scraper**: Modified `base_scraper.py` to use config file URLs instead of dynamic construction
+- ✅ **Fallback System**: Maintains fallback URL construction for missing config entries
+- ✅ **Verified All URLs**: Scraped the main profession guides index to get exact URLs for all professions/expansions
+
+#### Config File Structure:
+```json
+{
+  "base_url": "https://www.wow-professions.com",
+  "professions": {
+    "alchemy": {
+      "vanilla": "/guides/vanilla-alchemy-leveling",
+      "bfa": "/guides/zandalari-kul-tiran-bfa-alchemy-leveling-guide",
+      ...
+    }
+  },
+  "expansion_info": {...}
+}
+```
+
+#### Results:
+- ✅ **Fixed BfA**: Now correctly uses `/guides/zandalari-kul-tiran-bfa-{profession}-leveling-guide`
+- ✅ **Fixed Shadowlands**: Now correctly uses `/guides/shadowlands-{profession}-leveling-guide`  
+- ✅ **Maintained Compatibility**: All existing functionality preserved with fallback system
+- ✅ **Future-Proof**: Easy to add new profession guides by updating config file instead of code
+- ✅ **Reliable URLs**: No more guessing URL patterns, uses exact URLs from the site
+
 ### Git Configuration
 - **Fixed .gitignore**: Shopping lists are now properly tracked as main deliverables
 - **Complete alchemy.txt**: All available expansions included in tracked file
@@ -163,9 +198,11 @@ profession-auctionator/
 ├── README.md                           # Project documentation
 ├── CLAUDE.md                          # Development instructions and history
 ├── auctionator-shopping-lists/        # Ready-to-use shopping lists
-│   └── alchemy.txt                    # Alchemy materials (all expansions)
+│   ├── alchemy.txt                    # Alchemy materials (all expansions)
+│   └── blacksmithing.txt              # Blacksmithing materials
 └── python-scripts/                    # Automation tools
     ├── base_scraper.py                # Core scraping functionality
+    ├── profession_guides_config.json  # Profession guide URLs configuration
     ├── scrape_alchemy.py              # Alchemy-specific scraper
     ├── scrape_blacksmithing.py        # Blacksmithing scraper
     ├── scrape_engineering.py          # Engineering scraper

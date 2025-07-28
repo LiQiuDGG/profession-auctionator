@@ -7,29 +7,14 @@ Includes rate limiting and common functionality for all profession scrapers
 import requests
 import time
 import re
+import json
+import os
 from bs4 import BeautifulSoup
 from typing import List, Dict, Tuple, Optional
 from urllib.parse import urljoin
 
 class WowProfessionScraper:
     """Base class for scraping WoW profession leveling guides"""
-    
-    BASE_URL = "https://www.wow-professions.com"
-    
-    # Expansion mapping with their guide URL patterns and expansion numbers
-    EXPANSIONS = {
-        'vanilla': {'url': 'vanilla', 'number': 0},
-        'outland': {'url': 'outland', 'number': 1}, 
-        'northrend': {'url': 'northrend', 'number': 2},
-        'cataclysm': {'url': 'cataclysm', 'number': 3},
-        'pandaria': {'url': 'pandaria', 'number': 4},
-        'draenor': {'url': 'draenor', 'number': 5},
-        'legion': {'url': 'legion', 'number': 6},
-        'bfa': {'url': 'battle-for-azeroth', 'number': 7},
-        'shadowlands': {'url': 'shadowlands', 'number': 8},
-        'dragonflight': {'url': 'dragon-isles', 'number': 9},
-        'tww': {'url': 'the-war-within', 'number': 10}
-    }
     
     def __init__(self, profession: str, rate_limit: float = 2.0):
         """
@@ -45,6 +30,36 @@ class WowProfessionScraper:
         self.session.headers.update({
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
         })
+        
+        # Load profession guides configuration
+        self._load_config()
+        
+    def _load_config(self):
+        """Load profession guides configuration from JSON file"""
+        config_path = os.path.join(os.path.dirname(__file__), 'profession_guides_config.json')
+        try:
+            with open(config_path, 'r') as f:
+                self.config = json.load(f)
+            self.BASE_URL = self.config['base_url']
+            self.EXPANSIONS = {exp: info for exp, info in self.config['expansion_info'].items()}
+        except FileNotFoundError:
+            print(f"Warning: Config file not found at {config_path}. Using fallback configuration.")
+            # Fallback to old configuration
+            self.BASE_URL = "https://www.wow-professions.com"
+            self.EXPANSIONS = {
+                'vanilla': {'name': 'Vanilla (Classic)', 'number': 0},
+                'outland': {'name': 'Burning Crusade (Outland)', 'number': 1}, 
+                'northrend': {'name': 'Wrath of the Lich King (Northrend)', 'number': 2},
+                'cataclysm': {'name': 'Cataclysm', 'number': 3},
+                'pandaria': {'name': 'Mists of Pandaria', 'number': 4},
+                'draenor': {'name': 'Warlords of Draenor', 'number': 5},
+                'legion': {'name': 'Legion', 'number': 6},
+                'bfa': {'name': 'Battle for Azeroth', 'number': 7},
+                'shadowlands': {'name': 'Shadowlands', 'number': 8},
+                'dragonflight': {'name': 'Dragonflight', 'number': 9},
+                'tww': {'name': 'The War Within', 'number': 10}
+            }
+            self.config = {'professions': {}}
         
     def _wait(self):
         """Apply rate limiting between requests"""
@@ -71,22 +86,33 @@ class WowProfessionScraper:
             
     def _build_guide_url(self, expansion: str) -> str:
         """
-        Build the URL for a specific expansion's profession guide
+        Build the URL for a specific expansion's profession guide using config file
         
         Args:
-            expansion: Expansion key from EXPANSIONS dict
+            expansion: Expansion key from config
             
         Returns:
             Complete URL to the guide
         """
-        expansion_info = self.EXPANSIONS.get(expansion, {'url': expansion, 'number': 0})
-        expansion_url = expansion_info['url']
+        # Check if we have the profession in config
+        if self.profession in self.config.get('professions', {}):
+            profession_urls = self.config['professions'][self.profession]
+            if expansion in profession_urls and profession_urls[expansion] is not None:
+                return f"{self.BASE_URL}{profession_urls[expansion]}"
         
-        # Special case for dragonflight guide URL pattern
+        # Fallback to old URL construction if config is missing
+        print(f"Warning: No config URL found for {expansion} {self.profession}, using fallback URL construction")
+        expansion_info = self.EXPANSIONS.get(expansion, {'name': expansion.title(), 'number': 0})
+        
+        # Try some common URL patterns as fallback
         if expansion == 'dragonflight':
-            return f"{self.BASE_URL}/guides/{expansion_url}-{self.profession}-leveling-guide-dragonflight"
+            return f"{self.BASE_URL}/guides/dragon-isles-{self.profession}-leveling-guide-dragonflight"
+        elif expansion == 'bfa':
+            return f"{self.BASE_URL}/guides/zandalari-kul-tiran-bfa-{self.profession}-leveling-guide"
+        elif expansion in ['shadowlands']:
+            return f"{self.BASE_URL}/guides/{expansion}-{self.profession}-leveling-guide"
         else:
-            return f"{self.BASE_URL}/guides/{expansion_url}-{self.profession}-leveling"
+            return f"{self.BASE_URL}/guides/{expansion}-{self.profession}-leveling"
             
     def _extract_materials(self, soup: BeautifulSoup) -> List[Dict[str, any]]:
         """

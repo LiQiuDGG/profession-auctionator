@@ -1,0 +1,70 @@
+{
+  "base_url": "https://www.wow-professions.com",
+  "professions": {
+    "alchemy": {
+      "vanilla": "/guides/vanilla-alchemy-leveling",
+      "outland": "/guides/outland-alchemy-leveling", 
+      "northrend": "/guides/northrend-alchemy-leveling",
+      "cataclysm": "/guides/cataclysm-alchemy-leveling",
+      "pandaria": "/guides/pandaria-alchemy-leveling",
+      "draenor": "/guides/draenor-alchemy-leveling",
+      "legion": "/guides/legion-alchemy-leveling",
+      "bfa": "/guides/zandalari-kul-tiran-bfa-alchemy-leveling-guide",
+      "shadowlands": "/guides/shadowlands-alchemy-leveling-guide",
+      "dragonflight": "/guides/dragon-isles-alchemy-leveling-guide-dragonflight",
+      "tww": null
+    },
+    "blacksmithing": {
+      "vanilla": "/guides/vanilla-blacksmithing-leveling",
+      "outland": "/guides/outland-blacksmithing-leveling",
+      "northrend": "/guides/northrend-blacksmithing-leveling", 
+      "cataclysm": "/guides/cataclysm-blacksmithing-leveling",
+      "pandaria": "/guides/pandaria-blacksmithing-leveling",
+      "draenor": "/guides/draenor-blacksmithing-leveling",
+      "legion": "/guides/legion-blacksmithing-leveling",
+      "bfa": "/guides/zandalari-kul-tiran-bfa-blacksmithing-leveling-guide",
+      "shadowlands": "/guides/shadowlands-blacksmithing-leveling-guide",
+      "dragonflight": "/guides/dragon-isles-blacksmithing-leveling-guide-dragonflight",
+      "tww": null
+    },
+    "engineering": {
+      "vanilla": "/guides/vanilla-engineering-leveling",
+      "outland": "/guides/outland-engineering-leveling",
+      "northrend": "/guides/northrend-engineering-leveling",
+      "cataclysm": "/guides/cataclysm-engineering-leveling", 
+      "pandaria": "/guides/pandaria-engineering-leveling",
+      "draenor": "/guides/draenor-engineering-leveling",
+      "legion": "/guides/legion-engineering-leveling",
+      "bfa": "/guides/zandalari-kul-tiran-bfa-engineering-leveling-guide",
+      "shadowlands": "/guides/shadowlands-engineering-leveling-guide",
+      "dragonflight": "/guides/dragon-isles-engineering-leveling-guide-dragonflight",
+      "tww": null
+    },
+    "leatherworking": {
+      "vanilla": "/guides/vanilla-leatherworking-leveling",
+      "outland": "/guides/outland-leatherworking-leveling",
+      "northrend": "/guides/northrend-leatherworking-leveling",
+      "cataclysm": "/guides/cataclysm-leatherworking-leveling",
+      "pandaria": "/guides/pandaria-leatherworking-leveling", 
+      "draenor": "/guides/draenor-leatherworking-leveling",
+      "legion": "/guides/legion-leatherworking-leveling",
+      "bfa": "/guides/zandalari-kul-tiran-bfa-leatherworking-leveling-guide",
+      "shadowlands": "/guides/shadowlands-leatherworking-leveling-guide",
+      "dragonflight": "/guides/dragon-isles-leatherworking-leveling-guide-dragonflight",
+      "tww": null
+    }
+  },
+  "expansion_info": {
+    "vanilla": {"name": "Vanilla (Classic)", "number": 0},
+    "outland": {"name": "Burning Crusade (Outland)", "number": 1}, 
+    "northrend": {"name": "Wrath of the Lich King (Northrend)", "number": 2},
+    "cataclysm": {"name": "Cataclysm", "number": 3},
+    "pandaria": {"name": "Mists of Pandaria", "number": 4},
+    "draenor": {"name": "Warlords of Draenor", "number": 5},
+    "legion": {"name": "Legion", "number": 6},
+    "bfa": {"name": "Battle for Azeroth", "number": 7},
+    "shadowlands": {"name": "Shadowlands", "number": 8},
+    "dragonflight": {"name": "Dragonflight", "number": 9},
+    "tww": {"name": "The War Within", "number": 10}
+  }
+}
