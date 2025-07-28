@@ -60,6 +60,28 @@ class WowProfessionScraper:
                 'tww': {'name': 'The War Within', 'number': 10}
             }
             self.config = {'professions': {}}
+    
+    def _get_expansion_display_name(self, expansion: str) -> str:
+        """
+        Get the proper display name for an expansion
+        
+        Args:
+            expansion: Expansion key
+            
+        Returns:
+            Properly formatted expansion name
+        """
+        # Special case for TWW - should be all caps
+        if expansion == 'tww':
+            return 'TWW'
+            
+        # Use config name if available
+        expansion_info = self.EXPANSIONS.get(expansion)
+        if expansion_info and 'name' in expansion_info:
+            return expansion_info['name']
+            
+        # Fallback to title case
+        return expansion.replace('_', ' ').title()
         
     def _wait(self):
         """Apply rate limiting between requests"""
@@ -477,12 +499,12 @@ class WowProfessionScraper:
         soup = self._get_page(url)
         if not soup:
             print(f"Failed to fetch page for {expansion}")
-            expansion_name = expansion.replace('_', ' ').title()
+            expansion_name = self._get_expansion_display_name(expansion)
             return f"{expansion_name} {self.profession.title()}\n"
             
         materials = self._extract_materials(soup)
-        expansion_info = self.EXPANSIONS.get(expansion, {'url': expansion, 'number': 0})
-        expansion_name = expansion.replace('_', ' ').title()
+        expansion_info = self.EXPANSIONS.get(expansion, {'name': expansion.title(), 'number': 0})
+        expansion_name = self._get_expansion_display_name(expansion)
         expansion_number = expansion_info['number']
         
         print(f"Found {len(materials)} materials for {expansion} {self.profession}")
