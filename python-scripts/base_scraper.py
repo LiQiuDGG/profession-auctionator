@@ -414,7 +414,7 @@ class WowProfessionScraper:
         Args:
             materials: List of material dictionaries
             expansion_name: Name of the expansion for the header
-            expansion_number: WoW expansion number for Auctionator format
+            expansion_number: WoW expansion number (unused, kept for compatibility)
             
         Returns:
             Formatted string ready for Auctionator import
@@ -427,8 +427,8 @@ class WowProfessionScraper:
         # Create the formatted items list
         items = []
         for material in materials:
-            # Wrap item name in quotes for exact search, use correct expansion number
-            formatted_item = f'"{material["name"]}";{material["category"]};0;0;0;0;0;0;0;0;;#;{expansion_number};{material["quantity"]}'
+            # Wrap item name in quotes for exact search, remove expansion field entirely
+            formatted_item = f'"{material["name"]}";{material["category"]};0;0;0;0;0;0;0;0;;#;;{material["quantity"]}'
             items.append(formatted_item)
             
         # Format: Shopping List Name^Item1^Item2^Item3...
