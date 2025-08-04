@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.wow-professions.com)",
+      "WebFetch(domain:tradeskillmaster.com)",
+      "WebFetch(domain:tradeskillmaster.com)",
+      "Bash(python3:*)",
+      "Bash(source:*)",
+      "Bash(pip install:*)",
+      "Bash(mkdir:*)",
+      "Bash(mv:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git config:*)",
+      "Bash(python:*)",
+      "Bash(ls:*)",
+      "Bash(./venv/bin/python3 -m pip install:*)",
+      "Bash(../python-scripts/venv/bin/python3:*)",
+      "Bash(./venv/bin/python3:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": []
+  }
+}
